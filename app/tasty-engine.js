@@ -14,8 +14,7 @@ module.exports = {
     execute (codeToExecute) {
         // By for selectors in the tasty tests script
         var By = webdriver.By;   
-        
+
         eval(codeToExecute);
-        
     }
 };

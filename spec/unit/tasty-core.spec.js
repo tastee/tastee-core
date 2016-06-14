@@ -4,28 +4,29 @@ var engine;
 var analyser;
 var core; 
 describe("Tasty Core Engine", function() {
-    
+    var toSeleniumCodeSpy;
+
     beforeAll(function() {
-        mock('../../app/tasty-analyser.js', { 
+        mock('../../app/tasty-analyser', { 
             addPluginFile: function(file) { },
             addParamFile: function(file) { },
             toSeleniumCode: function(tastyCode) { }
         });
-        mock('../../app/tasty-engine.js', { 
+        mock('../../app/tasty-engine', { 
             init: function(browser) { },
             stop: function() { },
             execute: function(seleniumCode) { }
         });
 
-        engine = require('../../app/tasty-engine.js');
-        analyser = require('../../app/tasty-analyser.js');
-        core = require('../../app/tasty-core.js');
+        engine = require('../../app/tasty-engine');
+        analyser = require('../../app/tasty-analyser');
+        core = require('../../app/tasty-core');
     });
 
     beforeEach(function() {
        spyOn(analyser, 'addPluginFile');
        spyOn(analyser, 'addParamFile');
-       spyOn(analyser, "toSeleniumCode").and.returnValue('seleniumCode');
+       toSeleniumCodeSpy = spyOn(analyser, "toSeleniumCode").and.returnValue('seleniumCode');
        spyOn(engine, 'init');
        spyOn(engine, 'stop');
        spyOn(engine, 'execute');
@@ -40,6 +41,11 @@ describe("Tasty Core Engine", function() {
         var callback = function(){};
         core.loadAnalyser(callback);
         expect(analyser.addPluginFile).toHaveBeenCalledWith('./plugin/common-instructions.conf.tty', callback);
+    });
+
+    it("will add plugin files", function() {
+        core.addPluginFile("./a/file");
+        expect(analyser.addPluginFile).toHaveBeenCalledWith("./a/file");
     });
     
     it(" call init to init browser", function() {
@@ -65,5 +71,14 @@ describe("Tasty Core Engine", function() {
         core.addParamFile('aFile');
         
         expect(analyser.addParamFile).toHaveBeenCalledWith('aFile');
+    });
+
+    it(" translate and execute with errors", function() {
+        toSeleniumCodeSpy.and.throwError("expected error on test");
+
+        core.execute('tastyCode');
+        
+        expect(analyser.toSeleniumCode).toHaveBeenCalledWith(['tastyCode']);
+        expect(engine.execute).not.toHaveBeenCalledWith('seleniumCode');
     });
 });

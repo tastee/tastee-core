@@ -7,8 +7,8 @@ var stopCalled = false;
        
 describe("Tasty Engine", function() {
     beforeAll(function() {
-        mock('selenium-webdriver', "./mock/mockSeleniumDriver.js");
-        engine = require('../../app/tasty-engine.js');
+        mock('selenium-webdriver', "./mock/mockSeleniumDriver");
+        engine = require('../../app/tasty-engine');
     });
     
     beforeEach(function() {

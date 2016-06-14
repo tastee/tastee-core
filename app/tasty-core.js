@@ -1,12 +1,15 @@
 "use strict";
 
-var engine = require("./tasty-engine.js");
-var analyser = require("./tasty-analyser.js");
+var engine = require("./tasty-engine");
+var analyser = require("./tasty-analyser");
 
 module.exports = {
     //initialise common instruction once for all
     loadAnalyser(onAnalyserReady){
         analyser.addPluginFile("./plugin/common-instructions.conf.tty", onAnalyserReady);
+    },
+    addPluginFile (filePath) {
+        analyser.addPluginFile(filePath);
     },
     addParamFile (filePath) {
         analyser.addParamFile(filePath);

@@ -68,8 +68,6 @@ function _getSeleniumCodeFrom (tastyLine) {
 }
 
 function _extractTastyCode (fileLinesArray){
-    var instructions = [];
-
     var currentInstruction;
     var currentParameters;
     var currentCodeLines = [];
@@ -87,7 +85,7 @@ function _extractTastyCode (fileLinesArray){
             }
             currentCodeLines = [];
         } else if (line.startsWith("}*")) {
-            instructions[currentInstruction] = {
+            tastyCode[currentInstruction] = {
                 "parameters" : [].concat(currentParameters),
                 "codeLines"  : currentCodeLines,
                 "regexMatcher"  : currentRegexMatcher
@@ -101,7 +99,6 @@ function _extractTastyCode (fileLinesArray){
             }
         }
     }
-    return instructions;
 }
 
 function _convertParamToValue(tastyLine){
@@ -115,10 +112,7 @@ function _convertParamToValue(tastyLine){
 exports.addPluginFile = function addPluginFile (filePath, callback) {
     fs.readFile(filePath, "utf8", function (err, data) {
       if (!err) {
-          var tastyCodeToMerge = _extractTastyCode(data.split("\n"));
-          for (var key in tastyCodeToMerge) {
-              tastyCode[key] = tastyCodeToMerge[key];
-          }
+          _extractTastyCode(data.split("\n"));
       }
       if (callback){
         return callback();
