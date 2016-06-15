@@ -8,7 +8,7 @@ gulp.task('codacy', function sendToCodacy() {
   return gulp
     .src(['coverage/lcov.info'])
     .pipe(codacy({
-      token: 'dfb4448a1ade4ca095025658aa77b8e2'
+      token: 'e66931f429f647609cc62a849c27fed9'
     }));
 });
 
