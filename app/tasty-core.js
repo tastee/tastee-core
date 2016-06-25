@@ -5,13 +5,13 @@ var analyser = require("./tasty-analyser");
 
 module.exports = {
     //initialise common instruction once for all
-    loadAnalyser(onAnalyserReady){
+    loadAnalyser(onAnalyserReady) {
         analyser.addPluginFile("./plugin/common-instructions.conf.tty", onAnalyserReady);
     },
-    addPluginFile (filePath) {
+    addPluginFile(filePath) {
         analyser.addPluginFile(filePath);
     },
-    addParamFile (filePath) {
+    addParamFile(filePath) {
         analyser.addParamFile(filePath);
     },
     init(browser) {
@@ -23,8 +23,7 @@ module.exports = {
     execute(tastyCode) {
         try {
             var seleniumCode = analyser.toSeleniumCode(tastyCode.split("\n"));
-            
-            engine.execute(seleniumCode);
+            return engine.execute(seleniumCode);;
         }
         catch (exception) {
             console.error(exception.message);

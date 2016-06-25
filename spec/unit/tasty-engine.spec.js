@@ -1,4 +1,5 @@
 var mock = require('mock-require');
+var Instruction = require('../../app/instruction');
 
 var engine;
 
@@ -15,6 +16,7 @@ describe("Tasty Engine", function() {
         engine.init(function(method){
             buildCalled = (method === 'forBrowser');
             stopCalled = (method === 'quit');
+            executeCalled = (method === 'execute');
         });
     });
     
@@ -32,7 +34,9 @@ describe("Tasty Engine", function() {
     });
     
     it(" executes code", function() {
-        engine.execute('expect(true).toBe(true);');
+        var instruction = new Instruction (1,"go to www.google.fr" ,"expect(true).toBe(true);");
+        var instructions =[instruction];        
+        engine.execute(instructions);
     });
 
 });
