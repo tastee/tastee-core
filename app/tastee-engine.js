@@ -1,8 +1,8 @@
-// assert for assertions in the tasty tests script
+// assert for assertions in the tastee tests script
 var assert = require("assert");
 
 const webdriver = require("selenium-webdriver");
-var Reporter = require('./tasty-reporter');
+var Reporter = require('./tastee-reporter');
 
 module.exports = {
     init(browser, path) {

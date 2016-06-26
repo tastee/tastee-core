@@ -1,12 +1,12 @@
 "use strict";
 
-var engine = require("./tasty-engine");
-var analyser = require("./tasty-analyser");
+var engine = require("./tastee-engine");
+var analyser = require("./tastee-analyser");
 
 module.exports = {
     //initialise common instruction once for all
     loadAnalyser(onAnalyserReady) {
-        analyser.addPluginFile("./plugin/common-instructions.conf.tty", onAnalyserReady);
+        analyser.addPluginFile("./plugin/common-instructions.conf.tee", onAnalyserReady);
     },
     addPluginFile(filePath) {
         analyser.addPluginFile(filePath);
@@ -20,9 +20,9 @@ module.exports = {
     stop() {
         engine.stop();
     },
-    execute(tastyCode) {
+    execute(tasteeCode) {
         try {
-            var seleniumCode = analyser.toSeleniumCode(tastyCode.split("\n"));
+            var seleniumCode = analyser.toSeleniumCode(tasteeCode.split("\n"));
             return engine.execute(seleniumCode);;
         }
         catch (exception) {

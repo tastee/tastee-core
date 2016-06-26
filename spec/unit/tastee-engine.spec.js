@@ -6,11 +6,11 @@ var engine;
 var buildCalled = false;
 var stopCalled = false;
 
-describe("Tasty Engine", function () {
+describe("Tastee Engine", function () {
     beforeAll(function () {
         mock('selenium-webdriver', "./mock/mockSeleniumDriver");
         mock('junit-report-builder', require("./mock/mockJunitReporter"));
-        engine = require('../../app/tasty-engine');
+        engine = require('../../app/tastee-engine');
     });
 
     beforeEach(function () {

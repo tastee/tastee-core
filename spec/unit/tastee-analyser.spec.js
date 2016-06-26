@@ -1,32 +1,32 @@
-var analyser = require('../../app/tasty-analyser');
+var analyser = require('../../app/tastee-analyser');
 
-describe("Tasty Analyser", function() {
+describe("Tastee Analyser", function() {
 
     beforeAll(function(done) {
-        analyser.addPluginFile('./plugin/common-instructions.conf.tty', function(){
-            analyser.addPluginFile('./spec/examples/test-instructions.conf.tty', done);
+        analyser.addPluginFile('./plugin/common-instructions.conf.tee', function(){
+            analyser.addPluginFile('./spec/examples/test-instructions.conf.tee', done);
         });
-        //analyser.addPluginFile('./spec/examples/test-instructions.conf.tty', done);
-        analyser.addParamFile('./spec/examples/my-parameters.param.tty');
+        //analyser.addPluginFile('./spec/examples/test-instructions.conf.tee', done);
+        analyser.addParamFile('./spec/examples/my-parameters.param.tee');
     });
 
 
-    it("Add tasty code file as plugin - go to - verify paramters", function() {
-        expect(analyser.getTastyCode()['go to $url'].parameters[0]).toBe('$url');
+    it("Add tastee code file as plugin - go to - verify paramters", function() {
+        expect(analyser.getTasteeCode()['go to $url'].parameters[0]).toBe('$url');
     });
 
-    it("Add tasty code file as plugin - click on - verify codeLines", function() {
-        expect(analyser.getTastyCode()['click on $name'].codeLines[0]).toBe('driver.findElement(By.name($name)).click();');
+    it("Add tastee code file as plugin - click on - verify codeLines", function() {
+        expect(analyser.getTasteeCode()['click on $name'].codeLines[0]).toBe('driver.findElement(By.name($name)).click();');
     });
 
-    it("Translate tasty code to selenium code - go to", function() {
+    it("Translate tastee code to selenium code - go to", function() {
         var instructions = analyser.toSeleniumCode(['go to http://www.google.fr']);
         expect(instructions.length).toBe(1);
         expect(instructions[0].command).toBe("driver.get('http://www.google.fr');");
-        expect(instructions[0].tastyLine).toBe("go to http://www.google.fr");
+        expect(instructions[0].tasteeLine).toBe("go to http://www.google.fr");
     });
 
-    it("Translate tasty code to selenium code - verify", function() {
+    it("Translate tastee code to selenium code - verify", function() {
         var instructions = analyser.toSeleniumCode(['verify that myField is myValue']);
         expect(instructions[0].command).toBe("var element = driver.findElement(By.css('.'+'myField'));\n"+
                                     "element.getText().then(function(text) {\n"+
@@ -56,13 +56,13 @@ describe("Tasty Analyser", function() {
     });
 
     it("manages intructions that call other instruction", function() {
-        //see ./spec/examples/test-instructions.conf.tty
+        //see ./spec/examples/test-instructions.conf.tee
         var instructions = analyser.toSeleniumCode(['call go to google']);
         expect(instructions[0].command).toBe("driver.get('http://www.google.fr');");
     });
 
     it("manages intructions that call other instruction and parameters", function() {
-        //see ./spec/examples/test-instructions.conf.tty
+        //see ./spec/examples/test-instructions.conf.tee
         var instructions = analyser.toSeleniumCode(['call go to http://www.google.fr']);
         expect(instructions[0].command).toBe("driver.get('http://www.google.fr');");
     });

@@ -3,24 +3,24 @@ var mock = require('mock-require');
 var engine;
 var analyser;
 var core; 
-describe("Tasty Core Engine", function() {
+describe("Tastee Core Engine", function() {
     var toSeleniumCodeSpy;
 
     beforeAll(function() {
-        mock('../../app/tasty-analyser', { 
+        mock('../../app/tastee-analyser', { 
             addPluginFile: function(file) { },
             addParamFile: function(file) { },
-            toSeleniumCode: function(tastyCode) { }
+            toSeleniumCode: function(tasteeCode) { }
         });
-        mock('../../app/tasty-engine', { 
+        mock('../../app/tastee-engine', { 
             init: function(browser,screenShotPath) { },
             stop: function() { },
             execute: function(seleniumCode) { }
         });
 
-        engine = require('../../app/tasty-engine');
-        analyser = require('../../app/tasty-analyser');
-        core = require('../../app/tasty-core');
+        engine = require('../../app/tastee-engine');
+        analyser = require('../../app/tastee-analyser');
+        core = require('../../app/tastee-core');
     });
 
     beforeEach(function() {
@@ -34,13 +34,13 @@ describe("Tasty Core Engine", function() {
 
     afterAll(function() {
         mock.stopAll();
-        mock.stop('../../app/tasty-engine.js');
+        mock.stop('../../app/tastee-engine.js');
     });
     
     it("will load plugin at construction", function() {
         var callback = function(){};
         core.loadAnalyser(callback);
-        expect(analyser.addPluginFile).toHaveBeenCalledWith('./plugin/common-instructions.conf.tty', callback);
+        expect(analyser.addPluginFile).toHaveBeenCalledWith('./plugin/common-instructions.conf.tee', callback);
     });
 
     it("will add plugin files", function() {
@@ -61,9 +61,9 @@ describe("Tasty Core Engine", function() {
     });
     
     it(" translate and execute", function() {
-        core.execute('tastyCode');
+        core.execute('tasteeCode');
         
-        expect(analyser.toSeleniumCode).toHaveBeenCalledWith(['tastyCode']);
+        expect(analyser.toSeleniumCode).toHaveBeenCalledWith(['tasteeCode']);
         expect(engine.execute).toHaveBeenCalledWith('seleniumCode');
     });
     
@@ -76,9 +76,9 @@ describe("Tasty Core Engine", function() {
     it(" translate and execute with errors", function() {
         toSeleniumCodeSpy.and.throwError("expected error on test");
 
-        core.execute('tastyCode');
+        core.execute('tasteeCode');
         
-        expect(analyser.toSeleniumCode).toHaveBeenCalledWith(['tastyCode']);
+        expect(analyser.toSeleniumCode).toHaveBeenCalledWith(['tasteeCode']);
         expect(engine.execute).not.toHaveBeenCalledWith('seleniumCode');
     });
 });

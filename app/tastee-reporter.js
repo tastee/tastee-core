@@ -10,23 +10,23 @@ module.exports = {
         }
     },
     generateJunitReporter(instructions) {
-        var suite = builder.testSuite().name('My Tasty It');
+        var suite = builder.testSuite().name('My Tastee It');
 
         for (var i = 0; i < instructions.length; i++) {
-            if (instructions[i].tastyLine !== "") {
+            if (instructions[i].tasteeLine !== "") {
                 if (instructions[i].valid) {
                     suite.testCase()
                         .className('instruction')
-                        .name(instructions[i].tastyLine);
+                        .name(instructions[i].tasteeLine);
                 } else {
                     suite.testCase()
                         .className('instruction')
-                        .name(instructions[i].tastyLine)
+                        .name(instructions[i].tasteeLine)
                         .failure(instructions[i].errorMessage);
                 }
             }
         }
-        builder.writeTo('tasty-reporter-junit.xml');
+        builder.writeTo('tastee-reporter-junit.xml');
 
     },
     takeScreenShot(driver, screenShotPath, instruction) {

@@ -11,14 +11,14 @@ var classNameSpy;
 var faillure;
 var fs;
 var path
-describe("Tasty Reporter", function () {
+describe("tastee Reporter", function () {
 
     beforeAll(function () {
         mock('junit-report-builder', require("./mock/mockJunitReporter"));
         mock('fs');
         mock('path');
         builder = require('junit-report-builder');
-        Reporter = require('../../app/tasty-reporter')
+        Reporter = require('../../app/tastee-reporter')
     });
 
     beforeEach(function () {
@@ -79,10 +79,10 @@ describe("Tasty Reporter", function () {
 
         Reporter.generateJunitReporter(instructions)
 
-        expect(builder.writeTo).toHaveBeenCalledWith('tasty-reporter-junit.xml');
+        expect(builder.writeTo).toHaveBeenCalledWith('tastee-reporter-junit.xml');
         expect(builder.testSuite).toHaveBeenCalled();
         expect(classNameSpy.className).toHaveBeenCalled();
-        expect(testSuite.name).toHaveBeenCalledWith('My Tasty It');
+        expect(testSuite.name).toHaveBeenCalledWith('My Tastee It');
         expect(nameSpy.name).toHaveBeenCalledWith('go to www.google.fr');
 
     });
@@ -96,10 +96,10 @@ describe("Tasty Reporter", function () {
 
         Reporter.generateJunitReporter(instructions)
 
-        expect(builder.writeTo).toHaveBeenCalledWith('tasty-reporter-junit.xml');
+        expect(builder.writeTo).toHaveBeenCalledWith('tastee-reporter-junit.xml');
         expect(builder.testSuite).toHaveBeenCalled();
         expect(classNameSpy.className).toHaveBeenCalled();
-        expect(testSuite.name).toHaveBeenCalledWith('My Tasty It');
+        expect(testSuite.name).toHaveBeenCalledWith('My Tastee It');
         expect(nameSpy.name).toHaveBeenCalledWith('go to www.google.fr');
         expect(failSpy.failure).toHaveBeenCalledWith('error');
 
