@@ -24,6 +24,7 @@
   "dependencies": {
     "assert": "^1.4.1",
     "junit-report-builder": "^1.1.1",
+    "node-fs": "^0.1.7",
     "properties-reader": "0.0.15",
     "selenium-webdriver": "^2.53.2"
   },
