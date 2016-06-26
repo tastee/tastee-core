@@ -34,7 +34,7 @@ module.exports = {
             driver.takeScreenshot().then(
                 function (image, err) {
                     if (!fs.existsSync(screenShotPath)) {
-                        fs.mkdirSync(screenShotPath);
+                        fs.mkdirsSync(screenShotPath);
                     }
                     fs.writeFile(path.join(screenShotPath, instruction.numberLine + '.png'), image, 'base64', function (err) {
                     });
