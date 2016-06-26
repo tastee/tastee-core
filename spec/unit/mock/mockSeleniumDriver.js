@@ -39,7 +39,6 @@ class Flow {
     execute(callback) {
         this.jasmineCallback = callback;
         this.jasmineCallback('execute');
-        console.log(callback)
-        return new Promise(callback);
+        return new Promise(this.jasmineCallback);
     }
 }

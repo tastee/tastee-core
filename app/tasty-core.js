@@ -14,8 +14,8 @@ module.exports = {
     addParamFile(filePath) {
         analyser.addParamFile(filePath);
     },
-    init(browser) {
-        engine.init(browser);
+    init(browser, screenshotpath) {
+        engine.init(browser, screenshotpath);
     },
     stop() {
         engine.stop();

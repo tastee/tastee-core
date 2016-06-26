@@ -1,17 +1,19 @@
 var util = require("util");
 
-function Instruction(line, tastyLine, command) {
-  this.line = line;
+function Instruction(numberLine, tastyLine, command) {
+  this.numberLine = numberLine;
   this.tastyLine = tastyLine;
   this.command = command;
 }
 
-Instruction.prototype.setValid = function (result) {
-  this.result = result;
+Instruction.prototype.setValid = function (valid) {
+  this.valid = valid;
 };
-
+Instruction.prototype.setErrorMessage = function (errorMessage) {
+  this.errorMessage = errorMessage;
+}
 Instruction.prototype.toString = function () {
-  return util.format('%s => %s', this.tastyLine === undefined ? "" : this.tastyLine, this.result);
+  return util.format('%s => %s : %s', this.numberLine, this.tastyLine === undefined ? "" : this.tastyLine, this.valid);
 };
 
 // export the class

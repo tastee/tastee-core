@@ -1,11 +1,13 @@
 // assert for assertions in the tasty tests script
 var assert = require("assert");
-const webdriver = require("selenium-webdriver");
 
+const webdriver = require("selenium-webdriver");
+var Reporter = require('./tasty-reporter');
 
 module.exports = {
-    init(browser) {
+    init(browser, path) {
         driver = new webdriver.Builder().forBrowser(browser).build();
+        screenShotPath = path;
     },
     stop() {
         driver.quit();
@@ -22,8 +24,11 @@ module.exports = {
                     eval(codeToExecute[this].command);
                 }.bind(idx)).then(function () {
                     codeToExecute[this].setValid(true);
-                }.bind(idx), function () {
+                    Reporter.takeScreenShot(driver, screenShotPath, codeToExecute[this]);
+                }.bind(idx), function (error) {
                     codeToExecute[this].setValid(false);
+                    codeToExecute[this].setErrorMessage(error.message);
+                    Reporter.takeScreenShot(driver, screenShotPath, codeToExecute[this]);
                 }.bind(idx));
             }
         }).then(function () {

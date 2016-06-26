@@ -13,7 +13,7 @@ describe("Tasty Core Engine", function() {
             toSeleniumCode: function(tastyCode) { }
         });
         mock('../../app/tasty-engine', { 
-            init: function(browser) { },
+            init: function(browser,screenShotPath) { },
             stop: function() { },
             execute: function(seleniumCode) { }
         });
@@ -49,9 +49,9 @@ describe("Tasty Core Engine", function() {
     });
     
     it(" call init to init browser", function() {
-        core.init('firefox');
+        core.init('firefox','/tmp');
         
-        expect(engine.init).toHaveBeenCalledWith('firefox');
+        expect(engine.init).toHaveBeenCalledWith('firefox','/tmp');
     });
     
     it(" stops the engine", function() {
