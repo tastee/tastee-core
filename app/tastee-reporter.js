@@ -1,6 +1,6 @@
 
 var builder = require('junit-report-builder');
-var fs = require('fs');
+var fs = require('node-fs');
 var path = require('path');
 
 module.exports = {
