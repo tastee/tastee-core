@@ -14,6 +14,7 @@ module.exports = {
     },
     execute(codeToExecute) {
         var By = webdriver.By;
+        var Actions = webdriver.Actions;
         var ManagedPromise = webdriver.ManagedPromise;
         var flow = webdriver.promise.controlFlow();
 
