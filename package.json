@@ -1,6 +1,6 @@
 {
   "name": "tastee-core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Toast your Application with Simple Tests End to End - core of the tastee framework : test made Natural",
   "repository": {
     "type": "git",
@@ -12,21 +12,21 @@
   },
   "homepage": "https:/tastee.github.io",
   "devDependencies": {
-    "chromedriver": "^2.21.2",
-    "gulp": "^3.9.1",
-    "gulp-codacy": "^1.0.0",
-    "gulp-istanbul": "^0.10.4",
-    "gulp-jasmine": "^2.3.0",
-    "mock-require": "^1.3.0",
-    "npm": "^3.9.0",
-    "phantomjs-prebuilt": "^2.1.7"
+    "chromedriver": "2.25.1",
+    "gulp": "3.9.1",
+    "gulp-codacy": "1.0.0",
+    "gulp-istanbul": "1.1.1",
+    "gulp-jasmine": "2.4.2",
+    "mock-require": "1.3.0",
+    "npm": "3.10.9",
+    "phantomjs-prebuilt": "2.1.13"
   },
   "dependencies": {
-    "assert": "^1.4.1",
-    "junit-report-builder": "^1.1.1",
-    "node-fs": "^0.1.7",
+    "assert": "1.4.1",
+    "junit-report-builder": "1.1.1",
+    "node-fs": "0.1.7",
     "properties-reader": "0.0.15",
-    "selenium-webdriver": "^2.53.2"
+    "selenium-webdriver": "3.0.1"
   },
   "main": "./app/tastee-core.js"
 }
