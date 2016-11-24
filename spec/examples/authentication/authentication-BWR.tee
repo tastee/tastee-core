@@ -1,0 +1,27 @@
+
+//test empty authentication
+go to file:///media/astalin/DATA/Documents/perso/tastee/tastee.github.io/index.html
+click on #Go
+check that #step1Done is equal to Bad Credentials
+
+//test no password authentication
+fill #login field with webdriver
+click on #Go
+check that #step1Done is equal to Bad Credentials
+
+//test no login authentication
+clear #login field
+fill #password field with webdriverBad
+click on #Go
+check that #step1Done is equal to Bad Credentials
+
+//test bad password authentication
+fill #login field with webdriver
+click on #Go
+check that #step1Done is equal to Bad Credentials
+
+//test ok authentication
+clear #password field
+fill #password field with webdriver
+click on #Go
+check that #step1Done is equal to Great ! It seems that you\'ve completed the first step succesfully.\nWelcome within the great world of reliable tests !

@@ -1,0 +1,23 @@
+go to $url *{
+    driver.get($url);
+}*
+
+click on $name *{
+    driver.findElement(By.css($name)).click();
+}*
+
+check that $name is equal to $value *{
+    var element = driver.findElement(By.css($name));
+    element.getText().then(function(text) {
+        assert.equal(text, $value, 'the '+ $name + ' element contains '+text);
+
+    });
+}*
+
+fill $field field with $value *{
+    driver.findElement(By.css($field)).sendKeys($value);
+}*
+
+clear $field field *{
+    driver.findElement(By.css($field)).clear();
+}*

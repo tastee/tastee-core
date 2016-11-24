@@ -1,5 +1,7 @@
 "use strict";
 
+var debug = require('debug')('analyser');
+
 // fs is to manage file from the fileSystem
 var fs = require("fs");
 var propertiesReader = require("properties-reader");
@@ -66,6 +68,7 @@ function _getSeleniumCodeFrom(tasteeLine) {
     if (isMatchingInstruction) {
         return _extractSeleniumCode(isMatchingInstruction);
     }
+    return [tasteeLine];
 }
 
 function _extractTasteeCode(fileLinesArray) {
