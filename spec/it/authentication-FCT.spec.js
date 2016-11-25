@@ -9,11 +9,12 @@ var fs = require("fs");
 describe("Tastee Core Engine", function () {
     var callbacks;
     beforeAll(function (done) {
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
         //load asynchronous analyser, then launch tests
         core.loadAnalyser(function (){
 
-        fs.readFile("./spec/examples/authentication/authentication-BWR.tee", "utf8", function (err, data) {
+        core.addPluginFile("./spec/examples/authentication/authentication-FCT.conf.tee");
+        fs.readFile("./spec/examples/authentication/authentication-FCT.tee", "utf8", function (err, data) {
 
             core.init('phantomjs');
             core.execute(data).then(function (returnValue){
@@ -28,7 +29,7 @@ describe("Tastee Core Engine", function () {
       core.stop();
     });
 
-    it("will test authentication with browser-like script", function () {
+    it("will test authentication with fonctional-like script", function () {
           for (var idx = 0; idx < callbacks.length; idx++) {
             assert.equal(callbacks[idx].valid, true, 'At line '+callbacks[idx].lineNumber+ ' : '+callbacks[idx].errorMessage + '\n=>' + callbacks[idx] );
           }

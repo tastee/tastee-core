@@ -19,7 +19,7 @@ describe("Tastee Core Engine", function () {
             core.init('phantomjs');
             core.execute(data).then(function (returnValue){
               callbacks = returnValue;
-            return done();
+              return done();
             });
         });
       });
@@ -31,7 +31,7 @@ describe("Tastee Core Engine", function () {
 
     it("will test authentication with dev-like script", function () {
           for (var idx = 0; idx < callbacks.length; idx++) {
-            assert.equal(callbacks[idx].valid, true, 'At line '+callbacks[idx].lineNumber+ ' : '+callbacks[idx].errorMessage);
+            assert.equal(callbacks[idx].valid, true, 'At line '+callbacks[idx].lineNumber+ ' : '+callbacks[idx].errorMessage + '\n=>' + callbacks[idx] );
           }
     })
 

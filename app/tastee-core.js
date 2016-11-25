@@ -7,6 +7,7 @@ var analyser = require("./tastee-analyser");
 module.exports = {
     //initialise common instruction once for all
     loadAnalyser(onAnalyserReady) {
+        analyser.clear();
         analyser.addPluginFile("./plugin/common-instructions.conf.tee", onAnalyserReady);
     },
     addPluginFile(filePath) {

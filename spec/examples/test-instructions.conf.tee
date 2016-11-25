@@ -4,7 +4,7 @@ log some $value twice *{
 }*
 
 call go to google *{
-    go to http://www.google.fr
+    go to 'http://www.google.fr'
 }*
 
 call go to $url *{

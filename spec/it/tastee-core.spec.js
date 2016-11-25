@@ -2,6 +2,7 @@
 
 require('phantomjs-prebuilt');
 //require('chromedriver'); //in case of use chrome browser insyead of phantomjs (live testing)
+//require('geckodriver'); //in case of use firefox browser instead of phantomjs (live testing)
 const core = require('../../app/tastee-core');
 var fs = require("fs");
 

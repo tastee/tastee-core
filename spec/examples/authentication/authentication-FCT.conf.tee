@@ -1,0 +1,7 @@
+connect using $login and $password as credentials *{
+  clear '#login' field
+  clear '#password' field
+  fill '#login' field with $login
+  fill '#password' field with $password
+  click on '#Go'
+}*

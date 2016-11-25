@@ -29,11 +29,7 @@ var properties = propertiesReader();
 ////utility methods
 function _replaceTasteeParameters(codeLine, parametersArray, matcherArray) {
     parametersArray.forEach(function (element, i) {
-        var joiner = matcherArray[i + 1];
-        if (joiner && !joiner.startsWith("$")) {
-            joiner = "'" + joiner + "'";
-        }
-        codeLine = codeLine.split(element).join(joiner);
+        codeLine = codeLine.split(element).join(matcherArray[i + 1]);
     });
     return codeLine;
 }
@@ -103,11 +99,45 @@ function _extractTasteeCode(fileLinesArray) {
             }
         }
     }
+
+    //once done review lines inside tasteeCode
+    reviewInnerTasteeCode(0);
+}
+
+function reviewInnerTasteeCode(reviewNumber){
+    var hasChanged = false;
+
+    if(reviewNumber < 10){
+        for (var instruction in tasteeCode) {
+            var newLines = [];
+            debug("================>Before : "+ tasteeCode[instruction].codeLines)
+            for (var lineIndex in tasteeCode[instruction].codeLines) {
+                var line = tasteeCode[instruction].codeLines[lineIndex];
+                var isMatchingInstruction = _isTasteeLine(line);
+                if (isMatchingInstruction) {
+                      var seleniumCode =_extractSeleniumCode(isMatchingInstruction);
+                      newLines = newLines.concat(seleniumCode);
+                      hasChanged = true;
+                }else {
+                  newLines.push(line);
+                }
+            }
+
+            tasteeCode[instruction].codeLines = newLines;
+            debug("===============>After : "+ tasteeCode[instruction].codeLines)
+            debug(" ");
+
+            //Accept to run 10 times inside tasteecode imbrication
+            if(hasChanged){
+              reviewInnerTasteeCode(reviewNumber++);
+            }
+        }
+    }
 }
 
 function _convertParamToValue(tasteeLine) {
     properties.each((key, value) => {
-        tasteeLine = tasteeLine.split(key).join(value);
+        tasteeLine = tasteeLine.split(key).join("'"+value+"'");
     });
     return tasteeLine;
 }
@@ -115,9 +145,11 @@ function _convertParamToValue(tasteeLine) {
 
 exports.addPluginFile = function addPluginFile(filePath, callback) {
     fs.readFile(filePath, "utf8", function (err, data) {
+        debug('Starting analysing : %s', filePath)
         if (!err) {
             _extractTasteeCode(data.split("\n"));
         }
+        debug('End analysing : %s', filePath)
         if (callback) {
             return callback();
         }
@@ -130,6 +162,11 @@ exports.addParamFile = function addParamFile(filePath) {
 
 exports.getTasteeCode = function getTasteeCode() {
     return tasteeCode;
+};
+
+exports.clear = function addParamFile() {
+    tasteeCode = {};
+    properties = propertiesReader();
 };
 
 exports.toSeleniumCode = function toSeleniumCode(tasteeScriptLinesArray) {
