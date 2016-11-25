@@ -9,7 +9,7 @@ var fs = require("fs");
 describe("Tastee Core Engine", function () {
     var callbacks;
     beforeAll(function (done) {
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
         //load asynchronous analyser, then launch tests
         core.loadAnalyser(function (){
 
