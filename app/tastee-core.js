@@ -19,7 +19,7 @@ module.exports = {
         engine.init(browser, screenshotpath);
     },
     stop() {
-        //engine.stop();
+        engine.stop();
     },
     execute(tasteeCode) {
         try {
