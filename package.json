@@ -13,7 +13,6 @@
   "homepage": "https:/tastee.github.io",
   "devDependencies": {
     "chromedriver": "2.25.1",
-    "debug": "^2.3.3",
     "geckodriver": "1.2.0",
     "gulp": "3.9.1",
     "gulp-codacy": "1.0.0",
@@ -24,6 +23,7 @@
     "phantomjs-prebuilt": "2.1.13"
   },
   "dependencies": {
+    "debug": "^2.3.3",
     "assert": "1.4.1",
     "junit-report-builder": "1.1.1",
     "node-fs": "0.1.7",
