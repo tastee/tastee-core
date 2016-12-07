@@ -5,4 +5,8 @@ node_modules
 coverage
 
 *.log
+.idea
+coverage
+report
+transpiled
 *.iml

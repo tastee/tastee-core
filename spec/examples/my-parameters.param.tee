@@ -1,9 +1,0 @@
-
-# This is for unit tests
-param.field = myField
-param.value = myValue
-
-#this is for it tests
-wikipedia.Selenium = https://en.wikipedia.org/wiki/Selenium
-wikipedia.title = firstHeading
-selenium.title = Selenium
