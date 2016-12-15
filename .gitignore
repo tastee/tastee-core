@@ -10,3 +10,5 @@ coverage
 report
 transpiled
 *.iml
+./**/*.js
+./**/*.js.map
