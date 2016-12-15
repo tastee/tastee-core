@@ -49,10 +49,10 @@ export class TasteeReporter {
                 }        
             }
         };
-        fs.readFile(path.join(__dirname,"../rapport","index.html"), "utf8", function (err, data) {
+        fs.readFile(path.join(__dirname,"../html","index.html"), "utf8", function (err, data) {
             var output = mustache.to_html(data, fields);
             fs.writeFile(path.join(rapportPath, nameOfTest+ '.html'), output, function (err) {});
-            fs.createReadStream(path.join(__dirname,"../rapport","home.png")).pipe(fs.createWriteStream(path.join(rapportPath, 'home.png')));
+            fs.createReadStream(path.join(__dirname,"../html","home.png")).pipe(fs.createWriteStream(path.join(rapportPath, 'home.png')));
 
         });
 
