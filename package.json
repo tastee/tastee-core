@@ -11,7 +11,6 @@
     "url": "https://github.com/tastee/tastee-core/issues"
   },
   "homepage": "https:/tastee.github.io",
-
   "devDependencies": {
     "del": "2.2.0",
     "@types/jasmine": "^2.5.36",
@@ -35,10 +34,10 @@
   "dependencies": {
     "assert": "1.4.1",
     "junit-report-builder": "1.1.1",
+    "mustache": "^2.3.0",
     "node-fs": "0.1.7",
     "properties-reader": "0.0.15",
     "selenium-webdriver": "3.0.1"
   },
-
   "main": "./transpiled/src/app/tastee-core.js"
 }

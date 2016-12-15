@@ -13,7 +13,9 @@ gulp.task('build:clean', function() {
     return del([
         './transpiled',
         './coverage',
-        './report'
+        './report',
+        './src/**/*.js',
+        './src/**/*.js.map'
     ]);
 });
 
@@ -42,6 +44,17 @@ gulp.task('build',[/*'build:lint', */'build:clean'], function() {
         .pipe(sourcemaps.write('.'))
         /*flush to disk*/
         .pipe(gulp.dest('./transpiled'));
+});
+
+gulp.task('build:js',['build:clean'], function() {
+    //find test code - note use of 'base'
+    return gulp.src('./src/**/*.ts', { base: '.' })
+        /*transpile*/
+        .pipe(sourcemaps.init())
+        .pipe(tsProject())
+        .pipe(sourcemaps.write('.'))
+        /*flush to disk*/
+        .pipe(gulp.dest('.'));
 });
 
 gulp.task('test:instrument', ['build'], function() {
