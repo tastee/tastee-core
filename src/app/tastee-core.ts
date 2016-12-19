@@ -29,10 +29,10 @@ export class TasteeCore {
         this.engine.stop();
     }
 
-    execute(tasteeCode) : Promise<Instruction[]> {
+    execute(tasteeCode,tasteeFileName) : Promise<Instruction[]> {
         try {
             var seleniumCode = this.analyser.toSeleniumCode(tasteeCode.split('\n'));
-            return this.engine.execute(seleniumCode);
+            return this.engine.execute(seleniumCode,tasteeFileName);
         }
         catch (exception) {
             console.error(exception.message);

@@ -18,7 +18,7 @@ describe('Tastee Engine', function () {
         var sum = 0;
         engine.webdriver.By = function () { sum = +1 + 1; };
         var instruction = new instruction_1.Instruction(1, 'a line', 'By();');
-        engine.execute([instruction]);
+        engine.execute([instruction], "nameOfTasteeFile");
         expect(sum).toBe(2);
     });
 });

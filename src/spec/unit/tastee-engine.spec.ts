@@ -26,7 +26,7 @@ describe('Tastee Engine', function () {
 
         let instruction = new Instruction(1, 'a line', 'By();');
 
-        engine.execute([instruction]);
+        engine.execute([instruction],"nameOfTasteeFile");
 
         expect(sum).toBe(2);
     });

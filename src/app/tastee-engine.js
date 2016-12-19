@@ -13,7 +13,7 @@ var TasteeEngine = (function () {
     TasteeEngine.prototype.stop = function () {
         this.driver.quit();
     };
-    TasteeEngine.prototype.execute = function (codeToExecute) {
+    TasteeEngine.prototype.execute = function (codeToExecute, tasteeFileName) {
         var By = this.webdriver.By;
         var Actions = this.webdriver.Actions;
         var ManagedPromise = this.webdriver.ManagedPromise;
@@ -27,11 +27,11 @@ var TasteeEngine = (function () {
                     eval(codeToExecute[this].command);
                 }.bind(idx)).then(function () {
                     codeToExecute[this].setValid(true);
-                    reporter.takeScreenShot(driver, screenShotPath, codeToExecute[this]);
+                    reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[this]);
                 }.bind(idx), function (error) {
                     codeToExecute[this].setValid(false);
                     codeToExecute[this].setErrorMessage(error.message);
-                    reporter.takeScreenShot(driver, screenShotPath, codeToExecute[this]);
+                    reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[this]);
                 }.bind(idx));
             }
         }).then(function () {

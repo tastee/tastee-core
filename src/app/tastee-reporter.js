@@ -36,11 +36,12 @@ var TasteeReporter = (function () {
             instructions: instructions,
             "format": function () {
                 if (this.tasteeLine !== "") {
+                    var imagePath = path.join("screen", nameOfTest, this.lineNumber + ".png");
                     if (this.valid === true) {
-                        return "<div><p class=\"green-text\">" + this.tasteeLine + "</p><img class=\"materialboxed\" width=\"650\" src=\"./screen/" + this.lineNumber + ".png\"></div>";
+                        return "<div><p class=\"green-text\">" + this.tasteeLine + "</p><img class=\"materialboxed\" width=\"650\" src=\"" + imagePath + "\"></div>";
                     }
                     else {
-                        return "<div><p class=\"red-text\">" + this.tasteeLine + "</p><pclass=\"red-text\">" + this.errorMessage + "</p><img class=\"materialboxed\" width=\"650\" src=\"./screen/" + this.lineNumber + ".png\"></div>";
+                        return "<div><p class=\"red-text\">" + this.tasteeLine + "</p><pclass=\"red-text\">" + this.errorMessage + "</p><img class=\"materialboxed\" width=\"650\" src=\"" + imagePath + "\"></div>";
                     }
                 }
             }
@@ -51,16 +52,20 @@ var TasteeReporter = (function () {
             fs.createReadStream(path.join(__dirname, "../html", "home.png")).pipe(fs.createWriteStream(path.join(rapportPath, 'home.png')));
         });
     };
-    TasteeReporter.prototype.takeScreenShot = function (driver, rapportPath, instruction) {
+    TasteeReporter.prototype.takeScreenShot = function (driver, rapportPath, tasteeFileName, instruction) {
         if (rapportPath !== undefined) {
+            console.log(tasteeFileName);
             driver.takeScreenshot().then(function (image, err) {
                 if (!fs.existsSync(rapportPath)) {
                     fs.mkdirSync(rapportPath);
                 }
-                if (!fs.existsSync(rapportPath + "/screen")) {
-                    fs.mkdirSync(rapportPath + "/screen");
+                if (!fs.existsSync(path.join(rapportPath, 'screen'))) {
+                    fs.mkdirSync(path.join(rapportPath, 'screen'));
                 }
-                fs.writeFile(path.join(rapportPath + "/screen", instruction.lineNumber + '.png'), image, 'base64', function (err) {
+                if (!fs.existsSync(path.join(rapportPath, 'screen', tasteeFileName))) {
+                    fs.mkdirSync(path.join(rapportPath, 'screen', tasteeFileName));
+                }
+                fs.writeFile(path.join(rapportPath, 'screen', tasteeFileName, instruction.lineNumber + '.png'), image, 'base64', function (err) {
                 });
             });
         }

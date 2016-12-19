@@ -24,7 +24,7 @@ export class TasteeEngine {
         this.driver.quit();
     }
 
-    execute(codeToExecute : Instruction[]) :  Promise<Instruction[]>{
+    execute(codeToExecute : Instruction[],tasteeFileName : string) :  Promise<Instruction[]>{
         var By = this.webdriver.By;
         var Actions = this.webdriver.Actions;
         var ManagedPromise = this.webdriver.ManagedPromise;
@@ -41,11 +41,11 @@ export class TasteeEngine {
                     eval(codeToExecute[this].command);
                 }.bind(idx)).then(function () {
                     codeToExecute[this].setValid(true);
-                    reporter.takeScreenShot(driver, screenShotPath, codeToExecute[this]);
+                    reporter.takeScreenShot(driver, screenShotPath, tasteeFileName,codeToExecute[this]);
                 }.bind(idx), function (error) {
                     codeToExecute[this].setValid(false);
                     codeToExecute[this].setErrorMessage(error.message);
-                    reporter.takeScreenShot(driver, screenShotPath, codeToExecute[this]);
+                    reporter.takeScreenShot(driver, screenShotPath,tasteeFileName, codeToExecute[this]);
                 }.bind(idx));
             }
         }).then(function () {

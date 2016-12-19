@@ -16,10 +16,10 @@ var TasteeCore = (function () {
     TasteeCore.prototype.stop = function () {
         this.engine.stop();
     };
-    TasteeCore.prototype.execute = function (tasteeCode) {
+    TasteeCore.prototype.execute = function (tasteeCode, tasteeFileName) {
         try {
             var seleniumCode = this.analyser.toSeleniumCode(tasteeCode.split('\n'));
-            return this.engine.execute(seleniumCode);
+            return this.engine.execute(seleniumCode, tasteeFileName);
         }
         catch (exception) {
             console.error(exception.message);

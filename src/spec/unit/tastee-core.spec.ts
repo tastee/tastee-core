@@ -54,10 +54,10 @@ describe('Tastee Core', function () {
 
         tasteeAnalyser.toSeleniumCode.and.returnValue(executableCode);
 
-        core.execute(tasteeCode);
+        core.execute(tasteeCode,"nameOfTasteeFile");
 
         expect(tasteeAnalyser.toSeleniumCode).toHaveBeenCalledWith(["line1","line2"]);
-        expect(tasteeEngine.execute).toHaveBeenCalledWith(executableCode);
+        expect(tasteeEngine.execute).toHaveBeenCalledWith(executableCode,"nameOfTasteeFile");
     });
 
 });
