@@ -37,9 +37,12 @@
 
         <div class="row container">
               <h2 class="left-align header red-text text-darken-5">Report for : {{nameOfTest}}</h2>
-                {{#instructions}}
-                    {{{format}}}
-                {{/instructions}}       
+
+                <ul class="collapsible" data-collapsible="accordion">
+                    {{#instructions}}
+                        {{{format}}}
+                    {{/instructions}}       
+                </ul>
         </div>
 
     </div>

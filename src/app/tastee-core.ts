@@ -29,6 +29,9 @@ export class TasteeCore {
         this.engine.stop();
     }
 
+    initEnginer(engine:TasteeEngine){
+         this.engine = engine;
+    }
     execute(tasteeCode,tasteeFileName) : Promise<Instruction[]> {
         try {
             var seleniumCode = this.analyser.toSeleniumCode(tasteeCode.split('\n'));

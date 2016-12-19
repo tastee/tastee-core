@@ -16,6 +16,9 @@ var TasteeCore = (function () {
     TasteeCore.prototype.stop = function () {
         this.engine.stop();
     };
+    TasteeCore.prototype.initEnginer = function (engine) {
+        this.engine = engine;
+    };
     TasteeCore.prototype.execute = function (tasteeCode, tasteeFileName) {
         try {
             var seleniumCode = this.analyser.toSeleniumCode(tasteeCode.split('\n'));

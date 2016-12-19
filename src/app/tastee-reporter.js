@@ -38,10 +38,10 @@ var TasteeReporter = (function () {
                 if (this.tasteeLine !== "") {
                     var imagePath = path.join("screen", nameOfTest, this.lineNumber + ".png");
                     if (this.valid === true) {
-                        return "<div><p class=\"green-text\">" + this.tasteeLine + "</p><img class=\"materialboxed\" width=\"650\" src=\"" + imagePath + "\"></div>";
+                        return "<li><div class=\"collapsible-header\"><p class=\"green-text\">" + this.tasteeLine + "</p></div><div class=\"collapsible-body\"><img class=\"materialboxed\" width=\"650\" src=\"" + imagePath + "\"></div></li>";
                     }
                     else {
-                        return "<div><p class=\"red-text\">" + this.tasteeLine + "</p><pclass=\"red-text\">" + this.errorMessage + "</p><img class=\"materialboxed\" width=\"650\" src=\"" + imagePath + "\"></div>";
+                        return "<li><div class=\"collapsible-header\"><p class=\"red-text\">" + this.tasteeLine + "</p></div><div class=\"collapsible-body\"><pclass=\"red-text\">" + this.errorMessage + "</p><img class=\"materialboxed\" width=\"650\" src=\"" + imagePath + "\"></div></li>";
                     }
                 }
             }
@@ -54,7 +54,6 @@ var TasteeReporter = (function () {
     };
     TasteeReporter.prototype.takeScreenShot = function (driver, rapportPath, tasteeFileName, instruction) {
         if (rapportPath !== undefined) {
-            console.log(tasteeFileName);
             driver.takeScreenshot().then(function (image, err) {
                 if (!fs.existsSync(rapportPath)) {
                     fs.mkdirSync(rapportPath);
