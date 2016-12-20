@@ -17,7 +17,7 @@ export class TasteeCore {
     }
 
 
-    addPluginFile(filePath : string, onFileAdded : () => void) : void {
+    addPluginFile(filePath : string, onFileAdded? : () => void) : void {
         this.analyser.addPluginFile(filePath, onFileAdded);
     }
 
