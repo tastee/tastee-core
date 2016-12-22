@@ -61,6 +61,9 @@ var TasteeReporter = (function () {
                 if (!fs.existsSync(path.join(rapportPath, 'screen'))) {
                     fs.mkdirSync(path.join(rapportPath, 'screen'));
                 }
+                if (tasteeFileName !== undefined) {
+                    tasteeFileName = 'debug';
+                }
                 if (!fs.existsSync(path.join(rapportPath, 'screen', tasteeFileName))) {
                     fs.mkdirSync(path.join(rapportPath, 'screen', tasteeFileName));
                 }

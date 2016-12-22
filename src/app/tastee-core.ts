@@ -32,7 +32,7 @@ export class TasteeCore {
     initEnginer(engine:TasteeEngine){
          this.engine = engine;
     }
-    execute(tasteeCode,tasteeFileName) : Promise<Instruction[]> {
+    execute(tasteeCode:string,tasteeFileName?:string) : Promise<Instruction[]> {
         try {
             var seleniumCode = this.analyser.toSeleniumCode(tasteeCode.split('\n'));
             return this.engine.execute(seleniumCode,tasteeFileName);
