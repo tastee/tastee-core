@@ -8,7 +8,7 @@ coverage
 .idea
 coverage
 report
-transpiled
+#transpiled
 *.iml
-./**/*.js
-./**/*.js.map
+#./**/*.js
+#./**/*.js.map

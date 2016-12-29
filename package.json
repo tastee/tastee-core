@@ -39,5 +39,8 @@
     "properties-reader": "0.0.15",
     "selenium-webdriver": "3.0.1"
   },
-  "main": "./transpiled/src/app/tastee-core.js"
+  "main": "./transpiled/src/app/tastee-core.js",
+  "scripts": {
+    "build": "gulp"
+  }
 }
