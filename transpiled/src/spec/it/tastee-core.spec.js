@@ -2,14 +2,11 @@
 var tastee_core_1 = require("../../app/tastee-core");
 var tastee_analyser_1 = require("../../app/tastee-analyser");
 var tastee_engine_1 = require("../../app/tastee-engine");
-require('phantomjs-prebuilt');
-//require('chromedriver'); //in case of use chrome browser insyead of phantomjs (live testing)
-require('geckodriver'); //in case of use firefox browser instead of phantomjs (live testing)
 var fs = require("fs");
 describe("Tastee Core Engine", function () {
     var core;
     beforeEach(function (done) {
-        var engine = new tastee_engine_1.TasteeEngine('firefox', './report');
+        var engine = new tastee_engine_1.TasteeEngine('phantomjs', './report');
         core = new tastee_core_1.TasteeCore(engine, new tastee_analyser_1.TasteeAnalyser());
         //load asynchronous analyser, then launch tests
         core.addPluginFile('./src/spec/examples/test-instructions.conf.tee', function () {
