@@ -36,6 +36,9 @@ gulp.task("build:lint", function() {
 
 
 gulp.task('build',[/*'build:lint', */'build:clean'], function() {
+    // copy html folder
+    gulp.src('./src/html/**', { base: '.' })
+        .pipe(gulp.dest('./transpiled'));
     //find test code - note use of 'base'
     return gulp.src('./src/**/*.ts', { base: '.' })
         /*transpile*/
@@ -43,7 +46,7 @@ gulp.task('build',[/*'build:lint', */'build:clean'], function() {
         .pipe(tsProject())
         .pipe(sourcemaps.write('.'))
         /*flush to disk*/
-        .pipe(gulp.dest('./transpiled'));
+        .pipe(gulp.dest('./transpiled'));        
 });
 
 gulp.task('build:js',['build:clean'], function() {
