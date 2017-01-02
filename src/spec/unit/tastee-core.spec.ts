@@ -14,14 +14,8 @@ describe('Tastee Core', function () {
     beforeEach(function () {
         tasteeAnalyser = jasmine.createSpyObj("TasteeAnalyser", ["addPluginFile", "addParamFile", "toSeleniumCode"]);
         tasteeEngine = jasmine.createSpyObj("TasteeEngine", ["stop", "execute"]);
-        core = new TasteeCore(tasteeAnalyser, someCallback);
+        core = new TasteeCore(tasteeAnalyser);
         core.init(tasteeEngine);
-    });
-
-
-    it(" inits analyser with the common plugin file", function () {
-
-        expect(core.analyser.addPluginFile).toHaveBeenCalledWith('./plugin/common-instructions.conf.tee', someCallback);
     });
 
     it(" can add more plugin file", function () {

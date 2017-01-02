@@ -109,7 +109,7 @@ describe('Tastee Reporter', function () {
         var driver = jasmine.createSpyObj('driver', ['takeScreenshot'])
         driver.takeScreenshot.and.callThrough();
 
-        reporter.takeScreenShot(driver, undefined, instruction)
+        reporter.takeScreenShot(driver, undefined, undefined, instruction)
         expect(driver.takeScreenshot).not.toHaveBeenCalled();
     });
 
@@ -124,7 +124,7 @@ describe('Tastee Reporter', function () {
         var driver = jasmine.createSpyObj('driver', ['takeScreenshot'])
         driver.takeScreenshot.and.returnValue(promise);
 
-        reporter.takeScreenShot(driver, '/tmp', instruction)
+        reporter.takeScreenShot(driver, '/tmp', undefined, instruction)
         expect(driver.takeScreenshot).toHaveBeenCalled();
     });
 

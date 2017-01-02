@@ -7,9 +7,8 @@ export class TasteeCore {
     analyser:TasteeAnalyser;
     engine:TasteeEngine;
 
-    constructor(analyser:TasteeAnalyser, onAnalyserReady : () => void) {
+    constructor(analyser:TasteeAnalyser) {
         this.analyser = analyser;
-        this.analyser.addPluginFile('./plugin/common-instructions.conf.tee', onAnalyserReady);
     }
 
     init(engine:TasteeEngine) : void {

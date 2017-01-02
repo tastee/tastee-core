@@ -77,7 +77,7 @@ describe('Tastee Reporter', function () {
         instruction.setErrorMessage('error');
         var driver = jasmine.createSpyObj('driver', ['takeScreenshot']);
         driver.takeScreenshot.and.callThrough();
-        reporter.takeScreenShot(driver, undefined, instruction);
+        reporter.takeScreenShot(driver, undefined, undefined, instruction);
         expect(driver.takeScreenshot).not.toHaveBeenCalled();
     });
     it(" take screenshot if path is defined", function () {
@@ -88,7 +88,7 @@ describe('Tastee Reporter', function () {
         promise.then.and.callThrough();
         var driver = jasmine.createSpyObj('driver', ['takeScreenshot']);
         driver.takeScreenshot.and.returnValue(promise);
-        reporter.takeScreenShot(driver, '/tmp', instruction);
+        reporter.takeScreenShot(driver, '/tmp', undefined, instruction);
         expect(driver.takeScreenshot).toHaveBeenCalled();
     });
 });

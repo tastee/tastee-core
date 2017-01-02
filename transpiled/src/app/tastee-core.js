@@ -1,8 +1,7 @@
 "use strict";
 var TasteeCore = (function () {
-    function TasteeCore(analyser, onAnalyserReady) {
+    function TasteeCore(analyser) {
         this.analyser = analyser;
-        this.analyser.addPluginFile('./plugin/common-instructions.conf.tee', onAnalyserReady);
     }
     TasteeCore.prototype.init = function (engine) {
         this.engine = engine;

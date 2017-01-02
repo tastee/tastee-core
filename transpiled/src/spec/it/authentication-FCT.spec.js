@@ -10,10 +10,11 @@ describe("Tastee Core Engine", function () {
     beforeEach(function (done) {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
         var engine = new tastee_engine_1.TasteeEngine('phantomjs', './report');
-        core = new tastee_core_1.TasteeCore(new tastee_analyser_1.TasteeAnalyser(), function () {
-            core.init(engine);
-            //load asynchronous analyser, then launch tests
-            core.addPluginFile('./src/spec/examples/authentication/authentication-FCT.conf.tee', function () {
+        core = new tastee_core_1.TasteeCore(new tastee_analyser_1.TasteeAnalyser());
+        core.init(engine);
+        //load asynchronous analyser, then launch tests
+        core.addPluginFile('./src/spec/examples/authentication/authentication-FCT.conf.tee', function () {
+            core.addPluginFile('./plugin/common-instructions.conf.tee', function () {
                 done();
             });
         });
