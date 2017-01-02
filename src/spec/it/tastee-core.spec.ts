@@ -6,16 +6,18 @@ var fs = require("fs");
 
 describe("Tastee Core Engine", function () {
     let core:TasteeCore;
+
     beforeEach(function (done) {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
         let engine = new TasteeEngine('phantomjs', './report');
-        core = new TasteeCore(engine, new TasteeAnalyser());
-        //load asynchronous analyser, then launch tests
-        core.addPluginFile('./src/spec/examples/test-instructions.conf.tee', function(){
-            core.addPluginFile('./plugin/common-instructions.conf.tee', () => {
+        core = new TasteeCore(new TasteeAnalyser(), function(){
+            core.init(engine);
+            core.addParamFile('./src/spec/examples/my-parameters.param.tee');
+            //load asynchronous analyser, then launch tests
+            core.addPluginFile('./src/spec/examples/test-instructions.conf.tee', function(){
                 done();
             });
         });
-        core.addParamFile('./src/spec/examples/my-parameters.param.tee');
     });
 
     afterEach(function () {

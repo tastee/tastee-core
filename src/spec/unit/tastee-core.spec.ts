@@ -9,18 +9,17 @@ describe('Tastee Core', function () {
     let core:TasteeCore;
     let tasteeAnalyser;
     let tasteeEngine;
+    let someCallback = () => {};
 
     beforeEach(function () {
         tasteeAnalyser = jasmine.createSpyObj("TasteeAnalyser", ["addPluginFile", "addParamFile", "toSeleniumCode"]);
         tasteeEngine = jasmine.createSpyObj("TasteeEngine", ["stop", "execute"]);
-        core = new TasteeCore(tasteeEngine, tasteeAnalyser);
+        core = new TasteeCore(tasteeAnalyser, someCallback);
+        core.init(tasteeEngine);
     });
 
 
     it(" inits analyser with the common plugin file", function () {
-        let someCallback = () => {};
-
-        core.init(someCallback);
 
         expect(core.analyser.addPluginFile).toHaveBeenCalledWith('./plugin/common-instructions.conf.tee', someCallback);
     });
@@ -40,6 +39,10 @@ describe('Tastee Core', function () {
         core.addParamFile(filePath);
 
         expect(core.analyser.addParamFile).toHaveBeenCalledWith(filePath);
+    });
+
+    it(" can init the engine", function () {
+        expect(core.engine).toEqual(tasteeEngine);
     });
 
     it(" can stop the engine", function () {

@@ -7,15 +7,14 @@ export class TasteeCore {
     analyser:TasteeAnalyser;
     engine:TasteeEngine;
 
-    constructor(engine:TasteeEngine, analyser:TasteeAnalyser) {
+    constructor(analyser:TasteeAnalyser, onAnalyserReady : () => void) {
         this.analyser = analyser;
-        this.engine = engine;
-    }
-
-    init(onAnalyserReady : () => void) : void {
         this.analyser.addPluginFile('./plugin/common-instructions.conf.tee', onAnalyserReady);
     }
 
+    init(engine:TasteeEngine) : void {
+        this.engine = engine;
+    }
 
     addPluginFile(filePath : string, onFileAdded? : () => void) : void {
         this.analyser.addPluginFile(filePath, onFileAdded);
@@ -29,9 +28,6 @@ export class TasteeCore {
         this.engine.stop();
     }
 
-    initEnginer(engine:TasteeEngine){
-         this.engine = engine;
-    }
     execute(tasteeCode:string,tasteeFileName?:string) : Promise<Instruction[]> {
         try {
             var seleniumCode = this.analyser.toSeleniumCode(tasteeCode.split('\n'));

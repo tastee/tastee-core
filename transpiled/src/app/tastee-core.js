@@ -1,11 +1,11 @@
 "use strict";
 var TasteeCore = (function () {
-    function TasteeCore(engine, analyser) {
+    function TasteeCore(analyser, onAnalyserReady) {
         this.analyser = analyser;
-        this.engine = engine;
-    }
-    TasteeCore.prototype.init = function (onAnalyserReady) {
         this.analyser.addPluginFile('./plugin/common-instructions.conf.tee', onAnalyserReady);
+    }
+    TasteeCore.prototype.init = function (engine) {
+        this.engine = engine;
     };
     TasteeCore.prototype.addPluginFile = function (filePath, onFileAdded) {
         this.analyser.addPluginFile(filePath, onFileAdded);
@@ -15,9 +15,6 @@ var TasteeCore = (function () {
     };
     TasteeCore.prototype.stop = function () {
         this.engine.stop();
-    };
-    TasteeCore.prototype.initEnginer = function (engine) {
-        this.engine = engine;
     };
     TasteeCore.prototype.execute = function (tasteeCode, tasteeFileName) {
         try {
