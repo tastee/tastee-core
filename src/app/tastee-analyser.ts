@@ -22,7 +22,7 @@ export class TasteeAnalyser {
         fs.readFile(filePath, "utf8", function (err, data) {
 
             if (!err) {
-                that._extractTasteeCode(data.split("\n"));
+                that.extractTasteeCode(data.split("\n"));
             }
 
             if (callback) {
@@ -45,16 +45,13 @@ export class TasteeAnalyser {
 
     addParamFile(filePath) : void {
         this.properties.append(filePath);
-    };
-
-    private _convertParamToValue(tasteeLine) : string {
-        this.properties.each((key, value) => {
-            tasteeLine = tasteeLine.split(key).join("'"+value+"'");
-        });
-        return tasteeLine;
     }
 
-    private _extractTasteeCode(fileLinesArray : string[]) : void {
+    setParam(key : string, value : string){
+        this.properties.set(key, value);
+    }
+
+    extractTasteeCode(fileLinesArray : string[]) : void {
 
         let current : TasteeCode;
         for (let line of fileLinesArray) {
@@ -72,6 +69,13 @@ export class TasteeAnalyser {
 
         //once done review lines inside tasteeCode
         this._reviewInnerTasteeCode(0);
+    }
+
+    private _convertParamToValue(tasteeLine) : string {
+        this.properties.each((key, value) => {
+            tasteeLine = tasteeLine.split(key).join("'"+value+"'");
+        });
+        return tasteeLine;
     }
 
     private _reviewInnerTasteeCode(reviewNumber) : void {
