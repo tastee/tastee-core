@@ -1,23 +1,21 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 var tastee_code_1 = require("./tastee-code");
 var instruction_1 = require("./instruction");
 var propertiesReader = require('properties-reader');
-var TasteeAnalyser = (function () {
+var yaml = require('js-yaml');
+var TasteeAnalyser = /** @class */ (function () {
     function TasteeAnalyser() {
         this.tasteeCodes = [];
         this.properties = propertiesReader();
     }
     TasteeAnalyser.prototype.addPluginFile = function (filePath, callback) {
-        var that = this;
-        fs.readFile(filePath, "utf8", function (err, data) {
-            if (!err) {
-                that._extractTasteeCode(data.split("\n"));
-            }
-            if (callback) {
-                return callback();
-            }
-        });
+        var data = yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
+        this.extractTasteeCode(data);
+        if (callback) {
+            return callback();
+        }
     };
     TasteeAnalyser.prototype.toSeleniumCode = function (tasteeLinesArray) {
         var seleniumCodeLines;
@@ -32,35 +30,32 @@ var TasteeAnalyser = (function () {
     TasteeAnalyser.prototype.addParamFile = function (filePath) {
         this.properties.append(filePath);
     };
-    ;
+    TasteeAnalyser.prototype.setParam = function (key, value) {
+        this.properties.set(key, value);
+    };
+    TasteeAnalyser.prototype.extractTasteeCode = function (data) {
+        var current;
+        for (var _i = 0, _a = Object.keys(data); _i < _a.length; _i++) {
+            var key = _a[_i];
+            var tasteeCode = new tastee_code_1.TasteeCode(key);
+            for (var _b = 0, _c = data[key]; _b < _c.length; _b++) {
+                var instruction = _c[_b];
+                tasteeCode.addCodeLines(tastee_code_1.TasteeCodeMatcher.getSeleniumCodeFrom(instruction, this.tasteeCodes));
+            }
+            this.tasteeCodes.push(tasteeCode);
+        }
+        //once done review lines inside tasteeCode
+        this._reviewInnerTasteeCode(0);
+    };
     TasteeAnalyser.prototype._convertParamToValue = function (tasteeLine) {
         this.properties.each(function (key, value) {
             tasteeLine = tasteeLine.split(key).join("'" + value + "'");
         });
         return tasteeLine;
     };
-    TasteeAnalyser.prototype._extractTasteeCode = function (fileLinesArray) {
-        var current;
-        for (var _i = 0, fileLinesArray_1 = fileLinesArray; _i < fileLinesArray_1.length; _i++) {
-            var line = fileLinesArray_1[_i];
-            line = line.trim();
-            if (line.endsWith("*{")) {
-                current = new tastee_code_1.TasteeCode(line.substring(0, line.length - 2).trim());
-            }
-            else if (line.startsWith("}*")) {
-                this.tasteeCodes.push(current);
-            }
-            else if (line) {
-                current.addCodeLines(tastee_code_1.TasteeCodeMatcher.getSeleniumCodeFrom(line, this.tasteeCodes));
-            }
-        }
-        //once done review lines inside tasteeCode
-        this._reviewInnerTasteeCode(0);
-    };
     TasteeAnalyser.prototype._reviewInnerTasteeCode = function (reviewNumber) {
         var hasChanged = false;
         var newLines;
-        //limit to 10 review in order to avoid infinite treatment
         if (reviewNumber < 10) {
             for (var _i = 0, _a = this.tasteeCodes; _i < _a.length; _i++) {
                 var tasteeCode = _a[_i];

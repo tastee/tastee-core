@@ -1,8 +1,9 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 var path = require("path");
 var mustache = require("mustache");
-var TasteeReporter = (function () {
+var TasteeReporter = /** @class */ (function () {
     function TasteeReporter() {
         this.builder = require('junit-report-builder');
     }

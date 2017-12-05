@@ -1,19 +1,19 @@
 import * as util from 'util';
 
 export class TasteeCode {
-    instructionWithParameters : string;
-    parameters : string[];
-    regexMatcher : RegExp;
-    codeLines : string[];
+    instructionWithParameters: string;
+    parameters: string[];
+    regexMatcher: RegExp;
+    codeLines: string[];
 
-    constructor(tasteeLine : string){
-        this.instructionWithParameters =tasteeLine;
+    constructor(tasteeLine: string) {
+        this.instructionWithParameters = tasteeLine;
         this.parameters = tasteeLine.match(/\$\w*/gi);
         this.codeLines = [];
-
+        
         if (this.parameters) {
             this.regexMatcher = new RegExp("^" + tasteeLine.replace(new RegExp("\\" + this.parameters.join("|\\"), "g"), "(.*)"));
-        }else {
+        } else {
             this.regexMatcher = new RegExp("^" + tasteeLine);
         }
     }
@@ -22,7 +22,7 @@ export class TasteeCode {
         this.codeLines = this.codeLines.concat(codeLines);
     }
 
-    toSeleniumCodeLines(matchingArray : string[]) : string[] {
+    toSeleniumCodeLines(matchingArray: string[]): string[] {
         var seleniumCode = [];
         for (let line of this.codeLines) {
             seleniumCode.push(this._replaceTasteeParameters(line, matchingArray));
@@ -30,8 +30,8 @@ export class TasteeCode {
         return seleniumCode;
     }
 
-    private _replaceTasteeParameters(codeLine : string, matcherArray : string[]) : string {
-        if(this.parameters) {
+    private _replaceTasteeParameters(codeLine: string, matcherArray: string[]): string {
+        if (this.parameters) {
             this.parameters.forEach(function (parameter, i) {
                 codeLine = codeLine.split(parameter).join(matcherArray[i + 1]);
             });

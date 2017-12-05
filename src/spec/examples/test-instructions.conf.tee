@@ -1,12 +1,8 @@
+log some $value twice:
+    - console.log('log once '+$value+', and twice '+$value);
 
-log some $value twice *{
-    console.log('log once '+$value+', and twice '+$value);
-}*
+call go to google :
+    - go to 'http://www.google.fr'
 
-call go to google *{
-    go to 'http://www.google.fr'
-}*
-
-call go to $url *{
-    go to $url
-}*
+call go to $url:
+    - go to $url

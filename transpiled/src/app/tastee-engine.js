@@ -1,7 +1,8 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var tastee_reporter_1 = require("./tastee-reporter");
 var assert = require('assert');
-var TasteeEngine = (function () {
+var TasteeEngine = /** @class */ (function () {
     function TasteeEngine(browser, path) {
         this.webdriver = require('selenium-webdriver');
         if (browser) {

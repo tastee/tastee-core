@@ -1,5 +1,6 @@
-/* tslint:disable:no-unused-variable */
 "use strict";
+/* tslint:disable:no-unused-variable */
+Object.defineProperty(exports, "__esModule", { value: true });
 ////////  SPECS  /////////////
 var tastee_analyser_1 = require("../../app/tastee-analyser");
 describe('Tastee Analyser', function () {
@@ -33,16 +34,12 @@ describe('Tastee Analyser', function () {
     it("Translate tastee code to selenium code - verify", function () {
         var instructions = analyser.toSeleniumCode(["check that 'myField' is equal to 'myValue'"]);
         expect(instructions[0].command).toBe("var element = driver.findElement(By.css('myField'));\n" +
-            "element.getText().then(function(text) {\n" +
-            "assert.equal(text, 'myValue', 'the '+ 'myField' + ' element contains '+text);\n" +
-            "});");
+            "element.getText().then(function(text) { assert.equal(text, 'myValue', 'the '+ 'myField' + ' element contains '+text); });");
     });
     it("Translate using parameters", function () {
         var instructions = analyser.toSeleniumCode(['check that param.field is equal to param.value']);
         expect(instructions[0].command).toBe("var element = driver.findElement(By.css('myField'));\n" +
-            "element.getText().then(function(text) {\n" +
-            "assert.equal(text, 'myValue', 'the '+ 'myField' + ' element contains '+text);\n" +
-            "});");
+            "element.getText().then(function(text) { assert.equal(text, 'myValue', 'the '+ 'myField' + ' element contains '+text); });");
     });
     it("manage multiple occurences of function parameters when translating", function () {
         var instructions = analyser.toSeleniumCode(["log some 'thisValue' twice"]);
@@ -51,9 +48,7 @@ describe('Tastee Analyser', function () {
     it("manage multiple occurences of external parameters when translating", function () {
         var instructions = analyser.toSeleniumCode(['check that param.field is equal to param.field']);
         expect(instructions[0].command).toBe("var element = driver.findElement(By.css('myField'));\n" +
-            "element.getText().then(function(text) {\n" +
-            "assert.equal(text, 'myField', 'the '+ 'myField' + ' element contains '+text);\n" +
-            "});");
+            "element.getText().then(function(text) { assert.equal(text, 'myField', 'the '+ 'myField' + ' element contains '+text); });");
     });
     it("manages intructions that call other instruction", function () {
         //see ./spec/examples/test-instructions.conf.tee

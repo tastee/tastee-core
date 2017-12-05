@@ -1,5 +1,6 @@
-/* tslint:disable:no-unused-variable */
 "use strict";
+/* tslint:disable:no-unused-variable */
+Object.defineProperty(exports, "__esModule", { value: true });
 var tastee_engine_1 = require("../../app/tastee-engine");
 var instruction_1 = require("../../app/instruction");
 ////////  SPECS  /////////////
@@ -27,7 +28,7 @@ var promise = {
         return new Flow();
     }
 };
-var Flow = (function () {
+var Flow = /** @class */ (function () {
     function Flow() {
     }
     Flow.prototype.execute = function (callback) {

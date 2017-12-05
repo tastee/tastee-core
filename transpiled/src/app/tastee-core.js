@@ -1,5 +1,6 @@
 "use strict";
-var TasteeCore = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var TasteeCore = /** @class */ (function () {
     function TasteeCore(analyser) {
         this.analyser = analyser;
     }
@@ -16,8 +17,11 @@ var TasteeCore = (function () {
         this.engine.stop();
     };
     TasteeCore.prototype.execute = function (tasteeCode, tasteeFileName) {
+        return this.executeLines(tasteeCode.split('\n'), tasteeFileName);
+    };
+    TasteeCore.prototype.executeLines = function (tasteeCode, tasteeFileName) {
         try {
-            var seleniumCode = this.analyser.toSeleniumCode(tasteeCode.split('\n'));
+            var seleniumCode = this.analyser.toSeleniumCode(tasteeCode);
             return this.engine.execute(seleniumCode, tasteeFileName);
         }
         catch (exception) {

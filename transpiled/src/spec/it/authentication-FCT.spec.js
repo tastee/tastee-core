@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var tastee_core_1 = require("../../app/tastee-core");
 var tastee_analyser_1 = require("../../app/tastee-analyser");
 var tastee_engine_1 = require("../../app/tastee-engine");

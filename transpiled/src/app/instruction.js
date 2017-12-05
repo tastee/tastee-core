@@ -1,6 +1,7 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var util = require("util");
-var Instruction = (function () {
+var Instruction = /** @class */ (function () {
     function Instruction(lineNumber, tasteeLine, command) {
         this.lineNumber = lineNumber;
         this.tasteeLine = tasteeLine;

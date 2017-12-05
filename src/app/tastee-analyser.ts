@@ -1,10 +1,11 @@
 import * as fs from 'fs';
-import {TasteeCode, TasteeCodeMatcher} from "./tastee-code";
+import {TasteeCode,TasteeCodeMatcher} from "./tastee-code";
 import {Instruction} from "./instruction";
 
 
 declare var propertiesReader: any;
 var propertiesReader = require('properties-reader');
+const yaml = require('js-yaml');
 
 export class TasteeAnalyser {
 
@@ -17,27 +18,19 @@ export class TasteeAnalyser {
     }
 
     addPluginFile(filePath : string, callback: any) :void {
-
-        let that =this;
-        fs.readFile(filePath, "utf8", function (err, data) {
-
-            if (!err) {
-                that.extractTasteeCode(data.split("\n"));
-            }
-
-            if (callback) {
-                return callback();
-            }
-        });
+        var data = yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
+        this.extractTasteeCode(data);
+        if (callback) {
+            return callback();
+        }
     }
 
     toSeleniumCode(tasteeLinesArray : string[]) : Instruction[] {
         let seleniumCodeLines:string[];
         let instructions = [];
         for (var i = 0; i < tasteeLinesArray.length; i++) {
-
             var line = this._convertParamToValue(tasteeLinesArray[i].trim());
-            seleniumCodeLines = TasteeCodeMatcher.getSeleniumCodeFrom(line, this.tasteeCodes);
+            seleniumCodeLines = TasteeCodeMatcher.getSeleniumCodeFrom(line, this.tasteeCodes);            
             instructions.push(new Instruction(i, line, seleniumCodeLines !== undefined ? seleniumCodeLines.join('\n') : ''));
         }
         return instructions;
@@ -51,22 +44,15 @@ export class TasteeAnalyser {
         this.properties.set(key, value);
     }
 
-    extractTasteeCode(fileLinesArray : string[]) : void {
-
+    extractTasteeCode(data : any) : void {        
         let current : TasteeCode;
-        for (let line of fileLinesArray) {
-            line = line.trim();
-            if (line.endsWith("*{")) { //start a tastee code
-                current = new TasteeCode(line.substring(0, line.length - 2).trim());
-
-            }else if (line.startsWith("}*")) { //end tastee code
-                this.tasteeCodes.push(current);
-
-            } else if (line) { //tastee code instruction
-                current.addCodeLines(TasteeCodeMatcher.getSeleniumCodeFrom(line, this.tasteeCodes));
+        for(let key of Object.keys(data)){
+            let tasteeCode = new TasteeCode(key);
+            for(let instruction of data[key]){
+                tasteeCode.addCodeLines(TasteeCodeMatcher.getSeleniumCodeFrom(instruction, this.tasteeCodes))
             }
+            this.tasteeCodes.push(tasteeCode);     
         }
-
         //once done review lines inside tasteeCode
         this._reviewInnerTasteeCode(0);
     }
@@ -82,7 +68,6 @@ export class TasteeAnalyser {
         let hasChanged = false;
         let newLines : string[];
 
-        //limit to 10 review in order to avoid infinite treatment
         if(reviewNumber < 10) {
             for (let tasteeCode of this.tasteeCodes) {
                 newLines = [];

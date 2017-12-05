@@ -1,5 +1,6 @@
-/* tslint:disable:no-unused-variable */
 "use strict";
+/* tslint:disable:no-unused-variable */
+Object.defineProperty(exports, "__esModule", { value: true });
 var tastee_core_1 = require("../../app/tastee-core");
 ////////  SPECS  /////////////
 describe('Tastee Core', function () {

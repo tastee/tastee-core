@@ -1,5 +1,6 @@
-/* tslint:disable:no-unused-variable */
 "use strict";
+/* tslint:disable:no-unused-variable */
+Object.defineProperty(exports, "__esModule", { value: true });
 var instruction_1 = require("../../app/instruction");
 var tastee_reporter_1 = require("../../app/tastee-reporter");
 ////////  SPECS  /////////////

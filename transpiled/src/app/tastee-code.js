@@ -1,5 +1,6 @@
 "use strict";
-var TasteeCode = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var TasteeCode = /** @class */ (function () {
     function TasteeCode(tasteeLine) {
         this.instructionWithParameters = tasteeLine;
         this.parameters = tasteeLine.match(/\$\w*/gi);
@@ -33,7 +34,7 @@ var TasteeCode = (function () {
     return TasteeCode;
 }());
 exports.TasteeCode = TasteeCode;
-var TasteeCodeMatcher = (function () {
+var TasteeCodeMatcher = /** @class */ (function () {
     function TasteeCodeMatcher(tasteeCode, matchingArray) {
         this.tasteeCode = tasteeCode;
         this.matchingArray = matchingArray;
