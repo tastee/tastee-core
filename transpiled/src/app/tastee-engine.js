@@ -25,17 +25,20 @@ class TasteeEngine {
     execute(codeToExecute, tasteeFileName) {
         return __awaiter(this, void 0, void 0, function* () {
             var By = this.webdriver.By;
+            var until = this.webdriver.until;
             var Actions = this.webdriver.Actions;
             let screenShotPath = this.screenShotPath;
             let driver = this.driver;
             let reporter = this.reporter;
             for (var idx = 0; idx < codeToExecute.length; idx++) {
                 try {
+                    console.log(idx);
                     yield eval(codeToExecute[idx].command);
                     yield codeToExecute[idx].setValid(true);
                     yield reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
                 }
                 catch (error) {
+                    console.log(error);
                     yield codeToExecute[idx].setValid(false);
                     yield codeToExecute[idx].setErrorMessage(error.message);
                     yield reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
