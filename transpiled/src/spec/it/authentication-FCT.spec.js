@@ -25,12 +25,12 @@ describe("Tastee Core Engine", function () {
     });
     it("will test authentication with fonctional-like script", function (done) {
         fs.readFile("./src/spec/examples/authentication/authentication-FCT.tee", "utf8", function (err, data) {
-            core.execute(data).then(function (returnValue) {
-                for (var idx = 0; idx < returnValue.length; idx++) {
-                    assert.equal(returnValue[idx].valid, true, 'At line ' + returnValue[idx].lineNumber + ' : ' + returnValue[idx].errorMessage + '\n=>' + returnValue[idx]);
-                }
-                return done();
-            });
+            console.log(data);
+            var returnValue = core.execute(data);
+            for (var idx = 0; idx < returnValue.length; idx++) {
+                assert.equal(returnValue[idx].valid, true, 'At line ' + returnValue[idx].lineNumber + ' : ' + returnValue[idx].errorMessage + '\n=>' + returnValue[idx]);
+            }
+            return done();
         });
     });
 });

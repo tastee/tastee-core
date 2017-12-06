@@ -17,27 +17,22 @@ var TasteeEngine = /** @class */ (function () {
     TasteeEngine.prototype.execute = function (codeToExecute, tasteeFileName) {
         var By = this.webdriver.By;
         var Actions = this.webdriver.Actions;
-        var ManagedPromise = this.webdriver.ManagedPromise;
-        var flow = this.webdriver.promise.controlFlow();
         var screenShotPath = this.screenShotPath;
         var driver = this.driver;
         var reporter = this.reporter;
-        return flow.execute(function () {
-            for (var idx = 0; idx < codeToExecute.length; idx++) {
-                flow.execute(function () {
-                    eval(codeToExecute[this].command);
-                }.bind(idx)).then(function () {
-                    codeToExecute[this].setValid(true);
-                    reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[this]);
-                }.bind(idx), function (error) {
-                    codeToExecute[this].setValid(false);
-                    codeToExecute[this].setErrorMessage(error.message);
-                    reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[this]);
-                }.bind(idx));
+        for (var idx = 0; idx < codeToExecute.length; idx++) {
+            try {
+                eval(codeToExecute[idx].command);
+                codeToExecute[idx].setValid(true);
+                reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
             }
-        }).then(function () {
-            return codeToExecute;
-        });
+            catch (error) {
+                codeToExecute[idx].setValid(false);
+                codeToExecute[idx].setErrorMessage(error.message);
+                reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
+            }
+        }
+        return codeToExecute;
     };
     return TasteeEngine;
 }());

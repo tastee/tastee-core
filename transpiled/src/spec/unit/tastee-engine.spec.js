@@ -8,7 +8,9 @@ describe('Tastee Engine', function () {
     var engine;
     beforeEach(function () {
         engine = new tastee_engine_1.TasteeEngine(null, '');
-        engine.driver = jasmine.createSpyObj("driver", ["quit"]);
+        var driver = jasmine.createSpyObj("driver", ["quit", "takeScreenshot"]);
+        driver.takeScreenshot.and.returnValue(new Promise(function () { }));
+        engine.driver = driver;
         engine.webdriver.promise = promise;
     });
     it(" quits selenium driver properly", function () {

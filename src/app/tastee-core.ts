@@ -27,11 +27,11 @@ export class TasteeCore {
         this.engine.stop();
     }
 
-    execute(tasteeCode:string,tasteeFileName?:string) : Promise<Instruction[]> {
+    execute(tasteeCode:string,tasteeFileName?:string) : Instruction[] {
         return this.executeLines(tasteeCode.split('\n'), tasteeFileName);
     }
 
-    executeLines(tasteeCode:string[],tasteeFileName?:string) : Promise<Instruction[]> {
+    executeLines(tasteeCode:string[],tasteeFileName?:string) : Instruction[] {
         try {
             var seleniumCode = this.analyser.toSeleniumCode(tasteeCode);
             return this.engine.execute(seleniumCode,tasteeFileName);

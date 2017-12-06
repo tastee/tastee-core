@@ -1,16 +1,18 @@
 /* tslint:disable:no-unused-variable */
 
-import {TasteeEngine} from "../../app/tastee-engine";
-import {Instruction} from "../../app/instruction";
+import { TasteeEngine } from "../../app/tastee-engine";
+import { Instruction } from "../../app/instruction";
 
 ////////  SPECS  /////////////
 
 describe('Tastee Engine', function () {
-    let engine:TasteeEngine;
+    let engine: TasteeEngine;
 
     beforeEach(function () {
         engine = new TasteeEngine(null, '');
-        engine.driver = jasmine.createSpyObj("driver", ["quit"]);
+        let driver = jasmine.createSpyObj("driver", ["quit", "takeScreenshot"]);
+        driver.takeScreenshot.and.returnValue(new Promise(function(){}));
+        engine.driver = driver;
         engine.webdriver.promise = promise;
     });
 
@@ -22,11 +24,11 @@ describe('Tastee Engine', function () {
 
     it(" execute simple js code", function () {
         var sum = 0
-        engine.webdriver.By = () => {sum =+1+1;};
+        engine.webdriver.By = () => { sum = +1 + 1; };
 
         let instruction = new Instruction(1, 'a line', 'By();');
 
-        engine.execute([instruction],"nameOfTasteeFile");
+        engine.execute([instruction], "nameOfTasteeFile");
 
         expect(sum).toBe(2);
     });
@@ -40,7 +42,7 @@ let promise = {
 }
 
 class Flow {
-    jasmineCallback:any;
+    jasmineCallback: any;
 
     execute(callback) {
         this.jasmineCallback = callback;
