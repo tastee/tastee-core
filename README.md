@@ -19,12 +19,6 @@ TODO
 
 `npm install`
 
-PhantomJs binary needs to be in your PATH, for this purpose, you can add symbolic link to the executable : <br/>
-`ln -s <path to tastee-core>/node_modules/phantomjs-prebuilt/bin/phantomjs /usr/bin/pahntomjs`
-
-OPTIONAL, you can do the same with the chrome driver (in case you want to run test in Chrome) : <br/>
-`ln -s <path to tastee-core>/node_modules/chromedriver/bin/chromedriver /usr/bin/chromedriver`
-
 ## Run 
 * Tests: `gulp test`
 * Integration Tests : `gulp it`
