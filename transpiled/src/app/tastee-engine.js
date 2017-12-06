@@ -32,7 +32,6 @@ class TasteeEngine {
             let reporter = this.reporter;
             for (var idx = 0; idx < codeToExecute.length; idx++) {
                 try {
-                    console.log(idx);
                     yield eval(codeToExecute[idx].command);
                     yield codeToExecute[idx].setValid(true);
                     yield reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
