@@ -30,12 +30,8 @@ describe('Tastee Reporter', function () {
         testCaseSpy.testCase.and.returnValue(classNameSpy);
         testSuite = jasmine.createSpyObj('testSuite', ['name']);
         testSuite.name.and.returnValue(testCaseSpy);
-        //spyOn(builder, 'testSuite')
-        builder = jasmine.createSpyObj('builder', ['testSuite', 'writeTo']);
-        builder.testSuite.and.returnValue(testSuite);
         fs = jasmine.createSpyObj('fs', ['existsSync', 'mkdirSync']);
         path = jasmine.createSpyObj('path', ['join']);
-        reporter.builder = builder;
     });
     it(" print all field into this", function () {
         var instruction = new instruction_1.Instruction(1, "go to www.google.fr", "expect(true).toBe(true);");
@@ -48,29 +44,6 @@ describe('Tastee Reporter', function () {
         instruction.setValid(true);
         reporter.generateConsoleLog([instruction]);
         expect(console.log).toHaveBeenCalledWith('1 =>  : true');
-    });
-    it(" generate junit reporter with valid instructions", function () {
-        var instruction = new instruction_1.Instruction(1, "go to www.google.fr", "expect(true).toBe(true);");
-        instruction.setValid(true);
-        reporter.generateJunitReporter([instruction]);
-        expect(builder.writeTo).toHaveBeenCalledWith('tastee-reporter-junit.xml');
-        expect(builder.testSuite).toHaveBeenCalled();
-        expect(classNameSpy.className).toHaveBeenCalled();
-        expect(testSuite.name).toHaveBeenCalledWith('My Tastee It');
-        expect(nameSpy.name).toHaveBeenCalledWith('go to www.google.fr');
-    });
-    it(" generate junit reporter with failed instructions", function () {
-        var instruction = new instruction_1.Instruction(1, "go to www.google.fr", "expect(true).toBe(true);");
-        instruction.setValid(false);
-        instruction.setErrorMessage('error');
-        var instructions = [instruction];
-        reporter.generateJunitReporter(instructions);
-        expect(builder.writeTo).toHaveBeenCalledWith('tastee-reporter-junit.xml');
-        expect(builder.testSuite).toHaveBeenCalled();
-        expect(classNameSpy.className).toHaveBeenCalled();
-        expect(testSuite.name).toHaveBeenCalledWith('My Tastee It');
-        expect(nameSpy.name).toHaveBeenCalledWith('go to www.google.fr');
-        expect(failSpy.failure).toHaveBeenCalledWith('error');
     });
     it(" not take screenshot if path is undefined", function () {
         var instruction = new instruction_1.Instruction(1, "go to www.google.fr", "expect(true).toBe(true);");
