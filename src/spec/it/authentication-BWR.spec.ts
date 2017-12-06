@@ -30,10 +30,11 @@ describe("Tastee Core Engine", function () {
 
         fs.readFile("./src/spec/examples/authentication/authentication-BWR.tee", "utf8", function (err, data) {
 
-            let returnValue = core.execute(data);
-            for (var idx = 0; idx < returnValue.length; idx++) {
-                assert.equal(returnValue[idx].valid, true, 'At line ' + returnValue[idx].lineNumber + ' : ' + returnValue[idx].errorMessage + '\n=>' + returnValue[idx]);
-            }
+            core.execute(data).then(returnValue => {
+                for (var idx = 0; idx < returnValue.length; idx++) {
+                    assert.equal(returnValue[idx].valid, true, 'At line ' + returnValue[idx].lineNumber + ' : ' + returnValue[idx].errorMessage + '\n=>' + returnValue[idx]);
+                }
+            });
             return done();
         });
 

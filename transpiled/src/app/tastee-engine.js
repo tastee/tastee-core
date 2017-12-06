@@ -1,9 +1,17 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var tastee_reporter_1 = require("./tastee-reporter");
+const tastee_reporter_1 = require("./tastee-reporter");
 var assert = require('assert');
-var TasteeEngine = /** @class */ (function () {
-    function TasteeEngine(browser, path) {
+class TasteeEngine {
+    constructor(browser, path) {
         this.webdriver = require('selenium-webdriver');
         if (browser) {
             this.driver = new this.webdriver.Builder().forBrowser(browser).build();
@@ -11,31 +19,32 @@ var TasteeEngine = /** @class */ (function () {
         this.screenShotPath = path;
         this.reporter = new tastee_reporter_1.TasteeReporter();
     }
-    TasteeEngine.prototype.stop = function () {
+    stop() {
         this.driver.quit();
-    };
-    TasteeEngine.prototype.execute = function (codeToExecute, tasteeFileName) {
-        var By = this.webdriver.By;
-        var Actions = this.webdriver.Actions;
-        var screenShotPath = this.screenShotPath;
-        var driver = this.driver;
-        var reporter = this.reporter;
-        for (var idx = 0; idx < codeToExecute.length; idx++) {
-            try {
-                eval(codeToExecute[idx].command);
-                codeToExecute[idx].setValid(true);
-                reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
+    }
+    execute(codeToExecute, tasteeFileName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var By = this.webdriver.By;
+            var Actions = this.webdriver.Actions;
+            let screenShotPath = this.screenShotPath;
+            let driver = this.driver;
+            let reporter = this.reporter;
+            for (var idx = 0; idx < codeToExecute.length; idx++) {
+                try {
+                    yield eval(codeToExecute[idx].command);
+                    yield codeToExecute[idx].setValid(true);
+                    yield reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
+                }
+                catch (error) {
+                    yield codeToExecute[idx].setValid(false);
+                    yield codeToExecute[idx].setErrorMessage(error.message);
+                    yield reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
+                }
             }
-            catch (error) {
-                codeToExecute[idx].setValid(false);
-                codeToExecute[idx].setErrorMessage(error.message);
-                reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
-            }
-        }
-        return codeToExecute;
-    };
-    return TasteeEngine;
-}());
+            return new Promise(_ => codeToExecute);
+        });
+    }
+}
 exports.TasteeEngine = TasteeEngine;
 
 //# sourceMappingURL=tastee-engine.js.map

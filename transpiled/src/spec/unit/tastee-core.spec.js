@@ -1,13 +1,13 @@
 "use strict";
 /* tslint:disable:no-unused-variable */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tastee_core_1 = require("../../app/tastee-core");
+const tastee_core_1 = require("../../app/tastee-core");
 ////////  SPECS  /////////////
 describe('Tastee Core', function () {
-    var core;
-    var tasteeAnalyser;
-    var tasteeEngine;
-    var someCallback = function () { };
+    let core;
+    let tasteeAnalyser;
+    let tasteeEngine;
+    let someCallback = () => { };
     beforeEach(function () {
         tasteeAnalyser = jasmine.createSpyObj("TasteeAnalyser", ["addPluginFile", "addParamFile", "toSeleniumCode"]);
         tasteeEngine = jasmine.createSpyObj("TasteeEngine", ["stop", "execute"]);
@@ -15,13 +15,13 @@ describe('Tastee Core', function () {
         core.init(tasteeEngine);
     });
     it(" can add more plugin file", function () {
-        var someCallback = function () { };
-        var filePath = '/some/path';
+        let someCallback = () => { };
+        let filePath = '/some/path';
         core.addPluginFile(filePath, someCallback);
         expect(core.analyser.addPluginFile).toHaveBeenCalledWith(filePath, someCallback);
     });
     it(" can add parameter file", function () {
-        var filePath = '/some/path';
+        let filePath = '/some/path';
         core.addParamFile(filePath);
         expect(core.analyser.addParamFile).toHaveBeenCalledWith(filePath);
     });
@@ -33,8 +33,8 @@ describe('Tastee Core', function () {
         expect(core.engine.stop).toHaveBeenCalled();
     });
     it(" translate tastee code and execute it", function () {
-        var tasteeCode = "line1\nline2";
-        var executableCode = [];
+        let tasteeCode = "line1\nline2";
+        let executableCode = [];
         tasteeAnalyser.toSeleniumCode.and.returnValue(executableCode);
         core.execute(tasteeCode, "nameOfTasteeFile");
         expect(tasteeAnalyser.toSeleniumCode).toHaveBeenCalledWith(["line1", "line2"]);

@@ -24,7 +24,7 @@ export class TasteeEngine {
         this.driver.quit();
     }
 
-    execute(codeToExecute: Instruction[], tasteeFileName: string): Instruction[] {
+    async execute(codeToExecute: Instruction[], tasteeFileName: string): Promise<Instruction[]> {
         var By = this.webdriver.By;
         var Actions = this.webdriver.Actions;
         let screenShotPath = this.screenShotPath;
@@ -32,16 +32,16 @@ export class TasteeEngine {
         let reporter = this.reporter;
         for (var idx = 0; idx < codeToExecute.length; idx++) {
             try {
-                eval(codeToExecute[idx].command);
-                codeToExecute[idx].setValid(true);
-                reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
+                await eval(codeToExecute[idx].command);
+                await codeToExecute[idx].setValid(true);
+                await reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
             } catch (error) {
-                codeToExecute[idx].setValid(false);
-                codeToExecute[idx].setErrorMessage(error.message);
-                reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
+                await codeToExecute[idx].setValid(false);
+                await codeToExecute[idx].setErrorMessage(error.message);
+                await reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
             }
         }
-        return codeToExecute;
+        return new Promise<Instruction[]>(_ => codeToExecute);
     }
 
 }

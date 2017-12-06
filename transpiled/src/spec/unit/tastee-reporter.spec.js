@@ -1,8 +1,8 @@
 "use strict";
 /* tslint:disable:no-unused-variable */
 Object.defineProperty(exports, "__esModule", { value: true });
-var instruction_1 = require("../../app/instruction");
-var tastee_reporter_1 = require("../../app/tastee-reporter");
+const instruction_1 = require("../../app/instruction");
+const tastee_reporter_1 = require("../../app/tastee-reporter");
 ////////  SPECS  /////////////
 var Reporter;
 var builder;
@@ -15,9 +15,9 @@ var fs;
 var path;
 var failSpy;
 describe('Tastee Reporter', function () {
-    var reporter;
-    var tasteeAnalyser;
-    var tasteeEngine;
+    let reporter;
+    let tasteeAnalyser;
+    let tasteeEngine;
     beforeEach(function () {
         reporter = new tastee_reporter_1.TasteeReporter();
         spyOn(console, 'log');

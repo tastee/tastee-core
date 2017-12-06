@@ -45,10 +45,12 @@ describe("Tastee Core Engine", function () {
 
     it("will test a more complex tastee", function (done) {
         fs.readFile("./src/spec/examples/test-script.tee", "utf8", function (err, data) {
-            let instructions = core.execute(data)
-            if(instructions.filter(instruction => !instruction.valid).length==0){
-                done();
-            }
+            core.execute(data).then(instructions => {
+                if (instructions.filter(instruction => !instruction.valid).length == 0) {
+                    done();
+                }
+            });
+
         });
     });
 

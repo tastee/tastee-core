@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var TasteeCore = /** @class */ (function () {
-    function TasteeCore(analyser) {
+class TasteeCore {
+    constructor(analyser) {
         this.analyser = analyser;
     }
-    TasteeCore.prototype.init = function (engine) {
+    init(engine) {
         this.engine = engine;
-    };
-    TasteeCore.prototype.addPluginFile = function (filePath, onFileAdded) {
+    }
+    addPluginFile(filePath, onFileAdded) {
         this.analyser.addPluginFile(filePath, onFileAdded);
-    };
-    TasteeCore.prototype.addParamFile = function (filePath) {
+    }
+    addParamFile(filePath) {
         this.analyser.addParamFile(filePath);
-    };
-    TasteeCore.prototype.stop = function () {
+    }
+    stop() {
         this.engine.stop();
-    };
-    TasteeCore.prototype.execute = function (tasteeCode, tasteeFileName) {
+    }
+    execute(tasteeCode, tasteeFileName) {
         return this.executeLines(tasteeCode.split('\n'), tasteeFileName);
-    };
-    TasteeCore.prototype.executeLines = function (tasteeCode, tasteeFileName) {
+    }
+    executeLines(tasteeCode, tasteeFileName) {
         try {
             var seleniumCode = this.analyser.toSeleniumCode(tasteeCode);
             return this.engine.execute(seleniumCode, tasteeFileName);
@@ -27,9 +27,8 @@ var TasteeCore = /** @class */ (function () {
         catch (exception) {
             console.error(exception.message);
         }
-    };
-    return TasteeCore;
-}());
+    }
+}
 exports.TasteeCore = TasteeCore;
 
 //# sourceMappingURL=tastee-core.js.map

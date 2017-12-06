@@ -5,7 +5,7 @@ var sourcemaps = require('gulp-sourcemaps')
 const istanbul = require('gulp-istanbul');
 var remapIstanbul = require('remap-istanbul/lib/gulpRemapIstanbul');
 var del = require('del');
-var tslint = require("gulp-tslint");7
+var tslint = require("gulp-tslint");
 var tsProject = ts.createProject('./src/tsconfig.json');
 
 

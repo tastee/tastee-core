@@ -2,21 +2,21 @@
 /* tslint:disable:no-unused-variable */
 Object.defineProperty(exports, "__esModule", { value: true });
 ////////  SPECS  /////////////
-var tastee_analyser_1 = require("../../app/tastee-analyser");
+const tastee_analyser_1 = require("../../app/tastee-analyser");
 describe('Tastee Analyser', function () {
-    var analyser;
-    var callbackCalled = false;
-    beforeEach(function (done) {
+    let analyser;
+    let callbackCalled = false;
+    beforeEach((done) => {
         analyser = new tastee_analyser_1.TasteeAnalyser();
         analyser.addPluginFile('./src/spec/examples/test-instructions.conf.tee', function () {
-            analyser.addPluginFile('./plugin/common-instructions.conf.tee', function () {
+            analyser.addPluginFile('./plugin/common-instructions.conf.tee', () => {
                 callbackCalled = true;
                 done();
             });
         });
         analyser.addParamFile('./src/spec/examples/my-parameters.param.tee');
     });
-    it('manages call back after plugin added', function () {
+    it('manages call back after plugin added', () => {
         expect(callbackCalled).toBe(true);
     });
     it("Add tastee code file as plugin - go to - verify paramters", function () {
