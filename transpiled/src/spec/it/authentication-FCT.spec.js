@@ -14,8 +14,8 @@ describe("Tastee Core Engine", function () {
         core = new tastee_core_1.TasteeCore(new tastee_analyser_1.TasteeAnalyser());
         core.init(engine);
         //load asynchronous analyser, then launch tests
-        core.addPluginFile('./src/spec/examples/authentication/authentication-FCT.conf.tee', function () {
-            core.addPluginFile('./plugin/common-instructions.conf.tee', () => {
+        core.addPluginFile('./src/spec/examples/authentication/authentication-FCT.yaml', function () {
+            core.addPluginFile('./plugin/common-instructions.yaml', () => {
                 done();
             });
         });

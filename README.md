@@ -36,7 +36,7 @@ Extension that should be used : `.tee`
 
 ### tastee instruction file
 Tastee instruction files contains custom intruction written either with already defined tastee instruction or raw selenium-driver (javascript) code line.  
-Extension that should be used : `.conf.tee`
+Extension that should be used : `.yaml`
 
 ### tastee parameter file
 Tastee parameters file contains couples of key/value (as a property file).  

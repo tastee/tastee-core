@@ -16,7 +16,7 @@ describe("Tastee Core Engine", function () {
         core = new TasteeCore(new TasteeAnalyser());
         core.init(engine);
         //load asynchronous analyser, then launch tests
-        core.addPluginFile('./plugin/common-instructions.conf.tee', () => {
+        core.addPluginFile('./plugin/common-instructions.yaml', () => {
             done();
         });
         core.addParamFile('./src/spec/examples/my-parameters.param.tee');

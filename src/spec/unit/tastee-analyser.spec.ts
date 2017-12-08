@@ -11,8 +11,8 @@ describe('Tastee Analyser', function () {
 
     beforeEach((done) => {
         analyser = new TasteeAnalyser();
-        analyser.addPluginFile('./src/spec/examples/test-instructions.conf.tee', function(){
-            analyser.addPluginFile('./plugin/common-instructions.conf.tee', () => {
+        analyser.addPluginFile('./src/spec/examples/test-instructions.yaml', function(){
+            analyser.addPluginFile('./plugin/common-instructions.yaml', () => {
                 callbackCalled = true;
                 done();
             });
@@ -64,13 +64,13 @@ describe('Tastee Analyser', function () {
     });
 
     it("manages intructions that call other instruction", function() {
-        //see ./spec/examples/test-instructions.conf.tee
+        //see ./spec/examples/test-instructions.yaml
         var instructions = analyser.toSeleniumCode(['call go to google']);
         expect(instructions[0].command).toBe("driver.get('http://www.google.fr');");
     });
 
     it("manages intructions that call other instruction and parameters", function() {
-        //see ./spec/examples/test-instructions.conf.tee
+        //see ./spec/examples/test-instructions.yaml
         var instructions = analyser.toSeleniumCode(["call go to 'http://www.google.fr'"]);
         expect(instructions[0].command).toBe("driver.get('http://www.google.fr');");
     });

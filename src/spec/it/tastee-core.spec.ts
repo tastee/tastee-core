@@ -13,8 +13,8 @@ describe("Tastee Core Engine", function () {
         core = new TasteeCore(new TasteeAnalyser());
         core.init(engine);
         //load asynchronous analyser, then launch tests
-        core.addPluginFile('./plugin/common-instructions.conf.tee', function () {
-            core.addPluginFile('./src/spec/examples/test-instructions.conf.tee', function () {
+        core.addPluginFile('./plugin/common-instructions.yaml', function () {
+            core.addPluginFile('./src/spec/examples/test-instructions.yaml', function () {
                 done();
             });
         });

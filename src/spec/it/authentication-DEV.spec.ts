@@ -16,8 +16,8 @@ describe("Tastee Core Engine", function () {
         core = new TasteeCore(new TasteeAnalyser());
         core.init(engine);
         //load asynchronous analyser, then launch tests
-        core.addPluginFile('./src/spec/examples/authentication/authentication.conf.tee', function () {
-            core.addPluginFile('./plugin/common-instructions.conf.tee', () => {
+        core.addPluginFile('./src/spec/examples/authentication/authentication.yaml', function () {
+            core.addPluginFile('./plugin/common-instructions.yaml', () => {
                 done();
             });
         });
