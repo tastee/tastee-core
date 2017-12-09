@@ -20,13 +20,8 @@ class TasteeCore {
         return this.executeLines(tasteeCode.split('\n'), tasteeFileName);
     }
     executeLines(tasteeCode, tasteeFileName) {
-        try {
-            var seleniumCode = this.analyser.toSeleniumCode(tasteeCode);
-            return this.engine.execute(seleniumCode, tasteeFileName);
-        }
-        catch (exception) {
-            console.error(exception.message);
-        }
+        var seleniumCode = this.analyser.toSeleniumCode(tasteeCode);
+        return this.engine.execute(seleniumCode, tasteeFileName);
     }
 }
 exports.TasteeCore = TasteeCore;
