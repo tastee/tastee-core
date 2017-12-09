@@ -44,9 +44,9 @@ export class TasteeEngine {
         let reporter = this.reporter;
         for (var idx = 0; idx < codeToExecute.length; idx++) {
             try {
-                await eval(codeToExecute[idx].command);                
-                await codeToExecute[idx].setValid(true);                
-                await reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);                
+                await eval(codeToExecute[idx].command);
+                await codeToExecute[idx].setValid(true);
+                await reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
             } catch (error) {
                 console.log(error);
                 await codeToExecute[idx].setValid(false);
@@ -54,7 +54,7 @@ export class TasteeEngine {
                 await reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
             }
         }
-        return new Promise<Instruction[]>(_ => codeToExecute);
+        return codeToExecute;
     }
 
 }

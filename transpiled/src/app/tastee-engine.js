@@ -55,7 +55,7 @@ class TasteeEngine {
                     yield reporter.takeScreenShot(driver, screenShotPath, tasteeFileName, codeToExecute[idx]);
                 }
             }
-            return new Promise(_ => codeToExecute);
+            return codeToExecute;
         });
     }
 }
