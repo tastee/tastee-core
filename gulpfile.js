@@ -7,11 +7,12 @@ var remapIstanbul = require('remap-istanbul/lib/gulpRemapIstanbul');
 var del = require('del');
 var tslint = require("gulp-tslint");
 var tsProject = ts.createProject('./src/tsconfig.json');
+var tsindex = require('gulp-create-tsindex');
 
 
 gulp.task('build:clean', function() {
     return del([
-        './transpiled',
+        './dist',
         './coverage',
         './report',
         './src/**/*.js',
@@ -38,15 +39,16 @@ gulp.task("build:lint", function() {
 gulp.task('build',[/*'build:lint', */'build:clean'], function() {
     // copy html folder
     gulp.src('./src/html/**', { base: '.' })
-        .pipe(gulp.dest('./transpiled'));
+        .pipe(gulp.dest('./dist'));
     //find test code - note use of 'base'
-    return gulp.src('./src/**/*.ts', { base: '.' })
+    return gulp.src('./src/**/*.ts', { base: 'src' })
         /*transpile*/
+        .pipe(tsindex('./src/index.ts'))
         .pipe(sourcemaps.init())
         .pipe(tsProject())
         .pipe(sourcemaps.write('.'))
         /*flush to disk*/
-        .pipe(gulp.dest('./transpiled'));        
+        .pipe(gulp.dest('./dist'));        
 });
 
 gulp.task('build:js',['build:clean'], function() {
@@ -61,14 +63,14 @@ gulp.task('build:js',['build:clean'], function() {
 });
 
 gulp.task('test:instrument', ['build'], function() {
-    return gulp.src('./transpiled/src/app/**/*.js')
+    return gulp.src('./dist/app/**/*.js')
         .pipe(istanbul())
         .pipe(istanbul.hookRequire()); //this forces any call to 'require' to return our instrumented files
 });
 
 gulp.task('test', ['test:instrument'], function() {
     //find test code - note use of 'base'
-    return gulp.src('./transpiled/src/spec/unit**/*.js', { base: '.' })
+    return gulp.src('./dist/spec/unit**/*.js', { base: '.' })
 
         .pipe(jasmine()).pipe(istanbul.writeReports({
             reporters: [ 'json' ] //this yields a basic non-sourcemapped coverage.json file
@@ -82,12 +84,12 @@ gulp.task('rebuild', function () {
         .pipe(tsProject())
         .pipe(sourcemaps.write('.'))
         /*flush to disk*/
-        .pipe(gulp.dest('./transpiled'));
+        .pipe(gulp.dest('./dist'));
 });
 
 //integration test task
 gulp.task('it', ['rebuild'], function () {
-        gulp.src('./transpiled/src/spec/it/**/*.spec.js').pipe(jasmine());
+        gulp.src('./dist/spec/it/**/*.spec.js').pipe(jasmine());
 });
 
 function remapCoverageFiles () {
