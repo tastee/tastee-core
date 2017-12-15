@@ -32,7 +32,7 @@ These are the extension that we advice to use but for your own need, you can use
 
 ### tastee script file
 Tastee script files can contain either tastee instruction defined in conf file or raw selenium-driver (javascript) code line.  
-Extension that should be used : `.tee`
+Extension that should be used : `.html`
 
 ### tastee instruction file
 Tastee instruction files contains custom intruction written either with already defined tastee instruction or raw selenium-driver (javascript) code line.  
@@ -40,4 +40,4 @@ Extension that should be used : `.yaml`
 
 ### tastee parameter file
 Tastee parameters file contains couples of key/value (as a property file).  
-Extension that should be used : `.param.tee`
+Extension that should be used : `.parameters`

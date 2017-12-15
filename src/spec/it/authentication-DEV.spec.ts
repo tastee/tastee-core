@@ -21,7 +21,7 @@ describe("Tastee Core Engine", function () {
                 done();
             });
         });
-        core.addParamFile('./src/spec/examples/my-parameters.param.tee');
+        core.addParamFile('./src/spec/examples/my-parameters.parameters');
     });
 
     afterEach(function () {
@@ -30,7 +30,7 @@ describe("Tastee Core Engine", function () {
 
     it("will test authentication with dev-like script", function (done) {
 
-        fs.readFile("./src/spec/examples/authentication/authentication-DEV.tee", "utf8", function (err, data) {
+        fs.readFile("./src/spec/examples/authentication/authentication-DEV.html", "utf8", function (err, data) {
 
             core.execute(data).then(returnValue => {
                 for (var idx = 0; idx < returnValue.length; idx++) {

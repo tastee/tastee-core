@@ -29,7 +29,7 @@ describe("Tastee Core Engine", function () {
 
     it("will test authentication with fonctional-like script", function (done) {
 
-        fs.readFile("./src/spec/examples/authentication/authentication-FCT.tee", "utf8", function (err, data) {
+        fs.readFile("./src/spec/examples/authentication/authentication-FCT.html", "utf8", function (err, data) {
             console.log(data);
             core.execute(data).then(returnValue => {
                 for (var idx = 0; idx < returnValue.length; idx++) {

@@ -17,7 +17,7 @@ describe("Tastee Core Engine", function () {
                 done();
             });
         });
-        core.addParamFile('./src/spec/examples/my-parameters.param.tee');
+        core.addParamFile('./src/spec/examples/my-parameters.parameters');
     });
     afterEach(function () {
         core.stop();
@@ -37,7 +37,7 @@ describe("Tastee Core Engine", function () {
         }
     });
     it("will test a more complex tastee", function (done) {
-        fs.readFile("./src/spec/examples/test-script.tee", "utf8", function (err, data) {
+        fs.readFile("./src/spec/examples/test-script.html", "utf8", function (err, data) {
             core.execute(data).then(instructions => {
                 if (instructions.filter(instruction => !instruction.valid).length == 0) {
                     done();

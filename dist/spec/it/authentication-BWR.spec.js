@@ -17,13 +17,13 @@ describe("Tastee Core Engine", function () {
         core.addPluginFile('./plugin/common-instructions.yaml', () => {
             done();
         });
-        core.addParamFile('./src/spec/examples/my-parameters.param.tee');
+        core.addParamFile('./src/spec/examples/my-parameters.parameters');
     });
     afterEach(function () {
         core.stop();
     });
     it("will test authentication with browser-like script", function (done) {
-        fs.readFile("./src/spec/examples/authentication/authentication-BWR.tee", "utf8", function (err, data) {
+        fs.readFile("./src/spec/examples/authentication/authentication-BWR.html", "utf8", function (err, data) {
             core.execute(data).then(returnValue => {
                 for (var idx = 0; idx < returnValue.length; idx++) {
                     assert.equal(returnValue[idx].valid, true, 'At line ' + returnValue[idx].lineNumber + ' : ' + returnValue[idx].errorMessage + '\n=>' + returnValue[idx]);
