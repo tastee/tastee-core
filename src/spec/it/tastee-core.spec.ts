@@ -18,7 +18,7 @@ describe("Tastee Core Engine", function () {
                 done();
             });
         });
-        core.addParamFile('./src/spec/examples/my-parameters.parameters');
+        core.addParamFile('./src/spec/examples/my-parameters.properties');
     });
 
     afterEach(function () {

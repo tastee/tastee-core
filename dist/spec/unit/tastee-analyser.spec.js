@@ -14,7 +14,7 @@ describe('Tastee Analyser', function () {
                 done();
             });
         });
-        analyser.addParamFile('./src/spec/examples/my-parameters.parameters');
+        analyser.addParamFile('./src/spec/examples/my-parameters.properties');
     });
     it('manages call back after plugin added', () => {
         expect(callbackCalled).toBe(true);

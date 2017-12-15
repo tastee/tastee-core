@@ -40,4 +40,4 @@ Extension that should be used : `.yaml`
 
 ### tastee parameter file
 Tastee parameters file contains couples of key/value (as a property file).  
-Extension that should be used : `.parameters`
+Extension that should be used : `.properties`

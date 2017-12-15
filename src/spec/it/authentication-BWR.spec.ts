@@ -19,7 +19,7 @@ describe("Tastee Core Engine", function () {
         core.addPluginFile('./plugin/common-instructions.yaml', () => {
             done();
         });
-        core.addParamFile('./src/spec/examples/my-parameters.parameters');
+        core.addParamFile('./src/spec/examples/my-parameters.properties');
     });
 
     afterEach(function () {
