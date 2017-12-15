@@ -1,7 +1,15 @@
 language: node_js
 node_js:
-  - "5.10.1"
-  - "6.2.1"
+- 5.10.1
+- 6.2.1
 before_script:
-  - npm install -g gulp
+- npm install -g gulp
 script: gulp
+deploy:
+  provider: npm
+  email: tastee.is.good@gmail.com
+  api_key:
+    secure: oIOL8YlxwkN8pf0Vqu5T9q9Dq6q+mQWiM2nsoY2Dprx7QSzC/z7Fn25f22DqJ+5SezFTaSNRecN9EXdp+CYiLwDOSDZ4w434lYpVI1F0dOkk7uljvZnmZI/XunqBcZlP8WrJ4as8G8atbS7nqCnP5bna7EKtvuOH/elovdCNwCF6uwg4EPZBobZBI6SsA1IBiUN3PSxmyqwkzmz/K9v53z+6nl86na9EBYH5U94nIkqHPlNNExuITrt8FRKrFzant3mEjTU8c2jBnyoGftlu1sXkEKvONTC7Yqavhzfl4RmLPwCZZfZ4Ya3Z55i5kpd0nYRkPSVM0Md8I7d/0+LFL75nxzs0maX0VtCrpvkseoIC/4Md/J2NDJ7wp2NPfm6NPgSWmt2W/0sYmEKkbdjLW6fKl3e4gl91rf5/tuf24e3l9z2c3n+SWUba+hZWxpJ4IbFv7102G2pqlB+rFBo0ppHiSqB2tSQuJAAwj9FNgCPMvW+HpGoiezKYZjYtI5Pqk1wxrfkVTAmaH/0cN9Ny/gjR7pF4fg6yuu01QeehpSmwrypjQfPQCfNKWdj9oWzPce5aWL8CVs+gEaHRtZeQsN29LDpopWlLmF5VSKQUjp7j9599LzFRJ1AzQMPXyXNZoBmjHC9rIoWaGZL/elUc8ym4IBqIc5w1g8a39rIstTI=
+  on:
+    tags: true
+    repo: tastee/tastee-core
