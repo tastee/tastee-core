@@ -9,9 +9,8 @@ describe('Tastee Engine', function () {
     let engine: TasteeEngine;
 
     beforeEach(function () {
-        engine = new TasteeEngine(null, '');
-        let driver = jasmine.createSpyObj("driver", ["quit", "takeScreenshot"]);
-        driver.takeScreenshot.and.returnValue(new Promise(function(){}));
+        engine = new TasteeEngine(null);
+        let driver = jasmine.createSpyObj("driver", ["quit"]);
         engine.driver = driver;
         engine.webdriver.promise = promise;
     });

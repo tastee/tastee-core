@@ -10,7 +10,7 @@ describe("Tastee Core Engine", function () {
     let core;
     beforeEach(function (done) {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-        let engine = new tastee_engine_1.TasteeEngine('phantomjs', './report');
+        let engine = new tastee_engine_1.TasteeEngine('phantomjs', true);
         core = new tastee_core_1.TasteeCore(new tastee_analyser_1.TasteeAnalyser());
         core.init(engine);
         //load asynchronous analyser, then launch tests

@@ -65,32 +65,4 @@ describe('Tastee Reporter', function () {
         expect(console.log).toHaveBeenCalledWith('1 =>  : true');
     });
 
-
-    it(" not take screenshot if path is undefined", function () {
-        var instruction = new Instruction(1, "go to www.google.fr", "expect(true).toBe(true);");
-        instruction.setValid(false);
-        instruction.setErrorMessage('error');
-
-        var driver = jasmine.createSpyObj('driver', ['takeScreenshot'])
-        driver.takeScreenshot.and.callThrough();
-
-        reporter.takeScreenShot(driver, undefined, undefined, instruction)
-        expect(driver.takeScreenshot).not.toHaveBeenCalled();
-    });
-
-    it(" take screenshot if path is defined", function () {
-        var instruction = new Instruction(1, "go to www.google.fr", "expect(true).toBe(true);");
-        instruction.setValid(false);
-        instruction.setErrorMessage('error');
-
-        var promise = jasmine.createSpyObj('promise', ['then'])
-        promise.then.and.callThrough();
-
-        var driver = jasmine.createSpyObj('driver', ['takeScreenshot'])
-        driver.takeScreenshot.and.returnValue(promise);
-
-        reporter.takeScreenShot(driver, '/tmp', undefined, instruction)
-        expect(driver.takeScreenshot).toHaveBeenCalled();
-    });
-
 });

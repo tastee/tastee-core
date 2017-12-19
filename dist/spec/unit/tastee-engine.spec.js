@@ -7,9 +7,8 @@ const instruction_1 = require("../../app/instruction");
 describe('Tastee Engine', function () {
     let engine;
     beforeEach(function () {
-        engine = new tastee_engine_1.TasteeEngine(null, '');
-        let driver = jasmine.createSpyObj("driver", ["quit", "takeScreenshot"]);
-        driver.takeScreenshot.and.returnValue(new Promise(function () { }));
+        engine = new tastee_engine_1.TasteeEngine(null);
+        let driver = jasmine.createSpyObj("driver", ["quit"]);
         engine.driver = driver;
         engine.webdriver.promise = promise;
     });
