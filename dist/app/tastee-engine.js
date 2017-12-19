@@ -37,6 +37,7 @@ class TasteeEngine {
     execute(codeToExecute, tasteeFileName) {
         return __awaiter(this, void 0, void 0, function* () {
             var By = this.webdriver.By;
+            var Key = this.webdriver.Key;
             var until = this.webdriver.until;
             var Actions = this.webdriver.Actions;
             let screenShotPath = this.screenShotPath;
