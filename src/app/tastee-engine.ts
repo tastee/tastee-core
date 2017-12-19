@@ -37,6 +37,7 @@ export class TasteeEngine {
 
     async execute(codeToExecute: Instruction[], tasteeFileName: string): Promise<Instruction[]> {
         var By = this.webdriver.By;
+        var Keys = this.webdriver.Keys;
         var until = this.webdriver.until;
         var Actions = this.webdriver.Actions;
         let screenShotPath = this.screenShotPath;
