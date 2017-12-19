@@ -13,6 +13,10 @@ export class TasteeAnalyser {
     properties:any;
 
     constructor(){
+        this.init();
+    }
+
+    init(){
         this.tasteeCodes = [];
         this.properties = propertiesReader();
     }

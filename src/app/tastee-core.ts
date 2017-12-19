@@ -13,6 +13,7 @@ export class TasteeCore {
 
     init(engine: TasteeEngine): void {
         this.engine = engine;
+        this.analyser.init();
     }
 
     addPluginFile(filePath: string, onFileAdded?: () => void): void {
