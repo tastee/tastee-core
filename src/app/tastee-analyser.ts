@@ -16,7 +16,7 @@ export class TasteeAnalyser {
         this.init();
     }
 
-    init(){
+    init() : void{
         this.tasteeCodes = [];
         this.properties = propertiesReader();
     }

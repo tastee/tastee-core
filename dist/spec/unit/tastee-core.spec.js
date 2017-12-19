@@ -9,7 +9,7 @@ describe('Tastee Core', function () {
     let tasteeEngine;
     let someCallback = () => { };
     beforeEach(function () {
-        tasteeAnalyser = jasmine.createSpyObj("TasteeAnalyser", ["addPluginFile", "addParamFile", "toSeleniumCode"]);
+        tasteeAnalyser = jasmine.createSpyObj("TasteeAnalyser", ["addPluginFile", "addParamFile", "toSeleniumCode", "init"]);
         tasteeEngine = jasmine.createSpyObj("TasteeEngine", ["stop", "execute"]);
         core = new tastee_core_1.TasteeCore(tasteeAnalyser);
         core.init(tasteeEngine);

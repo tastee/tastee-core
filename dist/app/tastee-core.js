@@ -6,6 +6,7 @@ class TasteeCore {
     }
     init(engine) {
         this.engine = engine;
+        this.analyser.init();
     }
     addPluginFile(filePath, onFileAdded) {
         this.analyser.addPluginFile(filePath, onFileAdded);

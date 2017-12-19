@@ -7,6 +7,9 @@ var propertiesReader = require('properties-reader');
 const yaml = require('js-yaml');
 class TasteeAnalyser {
     constructor() {
+        this.init();
+    }
+    init() {
         this.tasteeCodes = [];
         this.properties = propertiesReader();
     }
