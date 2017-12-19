@@ -1,6 +1,6 @@
 {
   "name": "tastee-core",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Toast your Application with Simple Tests End to End - core of the tastee framework : test made Natural",
   "repository": {
     "type": "git",

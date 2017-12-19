@@ -17,12 +17,10 @@ class TasteeEngine {
         this.chrome = require('selenium-webdriver/chrome');
         if (browser) {
             if (headlessMode) {
-                const width = 640;
-                const height = 480;
                 this.driver = new this.webdriver.Builder()
                     .forBrowser(browser)
-                    .setChromeOptions(new this.chrome.Options().headless().windowSize({ width, height }))
-                    .setFirefoxOptions(new this.firefox.Options().headless().windowSize({ width, height }))
+                    .setChromeOptions(new this.chrome.Options().headless())
+                    .setFirefoxOptions(new this.firefox.Options().headless())
                     .build();
             }
             else {
