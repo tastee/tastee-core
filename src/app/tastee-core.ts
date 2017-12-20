@@ -1,7 +1,8 @@
 import { Instruction } from './instruction';
 import { TasteeEngine } from './tastee-engine';
 import { TasteeAnalyser } from './tastee-analyser';
-
+require('geckodriver');
+require('chromedriver');
 export class TasteeCore {
 
     analyser: TasteeAnalyser;

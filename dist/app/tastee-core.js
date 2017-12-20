@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+require('geckodriver');
+require('chromedriver');
 class TasteeCore {
     constructor(analyser) {
         this.analyser = analyser;
