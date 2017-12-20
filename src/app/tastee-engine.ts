@@ -12,9 +12,11 @@ export class TasteeEngine {
 
     constructor(browser: any, headlessMode: Boolean = false) {
         if (browser) {
+            require('geckodriver');
+            require('chromedriver');
             if (headlessMode) {
-		        const firefox = require('selenium-webdriver/firefox');
-    		    const chrome = require('selenium-webdriver/chrome');
+                const firefox = require('selenium-webdriver/firefox');
+                const chrome = require('selenium-webdriver/chrome');
                 this.driver = new this.webdriver.Builder()
                     .forBrowser(browser)
                     .setChromeOptions(

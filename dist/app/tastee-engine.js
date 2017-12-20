@@ -14,6 +14,8 @@ class TasteeEngine {
     constructor(browser, headlessMode = false) {
         this.webdriver = require('selenium-webdriver');
         if (browser) {
+            require('geckodriver');
+            require('chromedriver');
             if (headlessMode) {
                 const firefox = require('selenium-webdriver/firefox');
                 const chrome = require('selenium-webdriver/chrome');
