@@ -10,22 +10,41 @@ export class TasteeEngine {
 
     driver: any;
 
-    constructor(browser: any, headlessMode: Boolean = false) {
+    constructor(browser: string, headlessMode: Boolean = false) {
         if (browser) {
-            require('geckodriver');
-            require('chromedriver');
-            if (headlessMode) {
-                const firefox = require('selenium-webdriver/firefox');
-                const chrome = require('selenium-webdriver/chrome');
-                this.driver = new this.webdriver.Builder()
-                    .forBrowser(browser)
-                    .setChromeOptions(
-                    new chrome.Options().headless())
-                    .setFirefoxOptions(
-                    new firefox.Options().headless())
-                    .build();
-            } else {
-                this.driver = new this.webdriver.Builder().forBrowser(browser).build();
+            var chrome = require('selenium-webdriver/chrome');
+            var firefox = require('selenium-webdriver/firefox');
+            switch (browser) {
+                case 'chrome':
+                    var path = require('chromedriver').path;
+                    var service = new chrome.ServiceBuilder(path).build();
+                    chrome.setDefaultService(service);
+                    if (headlessMode) {
+                        this.driver = new this.webdriver.Builder()
+                            .withCapabilities(this.webdriver.Capabilities.chrome())
+                            .setChromeOptions(new chrome.Options().headless())
+                            .build();
+                    } else {
+                        this.driver = new this.webdriver.Builder()
+                            .withCapabilities(this.webdriver.Capabilities.chrome())
+                            .build();
+                    }
+                    break;
+                case 'firefox':
+                    var path = require('geckodriver').path;
+                    var service = new firefox.ServiceBuilder(path).build();
+                    firefox.setDefaultService(service);
+                    if (headlessMode) {
+                        this.driver = new this.webdriver.Builder()
+                            .withCapabilities(this.webdriver.Capabilities.firefox())
+                            .setChromeOptions(new firefox.Options().headless())
+                            .build();
+                    } else {
+                        this.driver = new this.webdriver.Builder()
+                            .withCapabilities(this.webdriver.Capabilities.firefox())
+                            .build();
+                    }
+                    break;
             }
         }
         this.reporter = new TasteeReporter();
