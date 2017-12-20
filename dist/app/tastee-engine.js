@@ -13,14 +13,14 @@ var assert = require('assert');
 class TasteeEngine {
     constructor(browser, headlessMode = false) {
         this.webdriver = require('selenium-webdriver');
-        this.firefox = require('selenium-webdriver/firefox');
-        this.chrome = require('selenium-webdriver/chrome');
         if (browser) {
             if (headlessMode) {
+                const firefox = require('selenium-webdriver/firefox');
+                const chrome = require('selenium-webdriver/chrome');
                 this.driver = new this.webdriver.Builder()
                     .forBrowser(browser)
-                    .setChromeOptions(new this.chrome.Options().headless())
-                    .setFirefoxOptions(new this.firefox.Options().headless())
+                    .setChromeOptions(new chrome.Options().headless())
+                    .setFirefoxOptions(new firefox.Options().headless())
                     .build();
             }
             else {

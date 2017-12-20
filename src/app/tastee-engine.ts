@@ -6,8 +6,6 @@ var assert = require('assert');
 export class TasteeEngine {
 
     webdriver = require('selenium-webdriver');
-    firefox = require('selenium-webdriver/firefox');
-    chrome = require('selenium-webdriver/chrome');
     reporter: TasteeReporter;
 
     driver: any;
@@ -15,12 +13,14 @@ export class TasteeEngine {
     constructor(browser: any, headlessMode: Boolean = false) {
         if (browser) {
             if (headlessMode) {
+		        const firefox = require('selenium-webdriver/firefox');
+    		    const chrome = require('selenium-webdriver/chrome');
                 this.driver = new this.webdriver.Builder()
                     .forBrowser(browser)
                     .setChromeOptions(
-                    new this.chrome.Options().headless())
+                    new chrome.Options().headless())
                     .setFirefoxOptions(
-                    new this.firefox.Options().headless())
+                    new firefox.Options().headless())
                     .build();
             } else {
                 this.driver = new this.webdriver.Builder().forBrowser(browser).build();
