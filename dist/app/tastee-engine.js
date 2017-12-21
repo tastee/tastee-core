@@ -43,6 +43,7 @@ class TasteeEngine {
                             .build();
                     }
                     else {
+                        var firefox = require('selenium-webdriver/firefox');
                         this.driver = new this.webdriver.Builder()
                             .forBrowser('firefox')
                             .setFirefoxOptions(new firefox.Options().useGeckoDriver(false))
