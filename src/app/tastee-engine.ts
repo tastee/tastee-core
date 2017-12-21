@@ -15,8 +15,6 @@ export class TasteeEngine {
             this.webdriver = require('selenium-webdriver');
             switch (browser) {
                 case 'chrome':
-                    var path = require('chromedriver').path;
-                    console.log('driver use : ' + path);
                     if (headlessMode) {
                         var chrome = require('selenium-webdriver/chrome');
                         this.driver = new this.webdriver.Builder()
@@ -31,8 +29,6 @@ export class TasteeEngine {
                     }
                     break;
                 case 'firefox':
-                    var path = require('geckodriver').path;
-                    console.log('driver use : ' + path);
                     if (headlessMode) {
                         var firefox = require('selenium-webdriver/firefox');
                         this.driver = new this.webdriver.Builder()
@@ -41,7 +37,6 @@ export class TasteeEngine {
                             .build();
                     }
                     else {
-                        var firefox = require('selenium-webdriver/firefox');
                         this.driver = new this.webdriver.Builder()
                             .forBrowser('firefox')
                             .build();
