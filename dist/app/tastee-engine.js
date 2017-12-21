@@ -29,7 +29,7 @@ class TasteeEngine {
                     else {
                         this.driver = new this.webdriver.Builder()
                             .withCapabilities(this.webdriver.Capabilities.chrome())
-                            .forBrowser('browser')
+                            .forBrowser(browser)
                             .build();
                     }
                     break;
@@ -46,7 +46,7 @@ class TasteeEngine {
                     else {
                         this.driver = new this.webdriver.Builder()
                             .withCapabilities(this.webdriver.Capabilities.firefox())
-                            .forBrowser('firefox')
+                            .forBrowser(browser)
                             .build();
                     }
                     break;
