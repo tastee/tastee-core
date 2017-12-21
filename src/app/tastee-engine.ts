@@ -37,12 +37,13 @@ export class TasteeEngine {
                         var firefox = require('selenium-webdriver/firefox');
                         this.driver = new this.webdriver.Builder()
                             .withCapabilities(this.webdriver.Capabilities.firefox())
-                            .setChromeOptions(new firefox.Options().headless())
+                            .setFirefoxOptions(new firefox.Options().headless())
                             .build();
                     }
                     else {
                         this.driver = new this.webdriver.Builder()
                             .forBrowser('firefox')
+                            .setFirefoxOptions(new firefox.Options().useGeckoDriver(false))
                             .build();
                     }
                     break;
