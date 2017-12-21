@@ -12,19 +12,19 @@ export class TasteeEngine {
 
     constructor(browser: string, headlessMode: Boolean = false) {
         if (browser) {
-            var chrome = require('selenium-webdriver/chrome');
-            var firefox = require('selenium-webdriver/firefox');
+            this.webdriver = require('selenium-webdriver');
             switch (browser) {
                 case 'chrome':
                     var path = require('chromedriver').path;
-                    var service = new chrome.ServiceBuilder(path).build();
-                    chrome.setDefaultService(service);
+                    console.log('driver use : ' + path);
                     if (headlessMode) {
+                        var chrome = require('selenium-webdriver/chrome');
                         this.driver = new this.webdriver.Builder()
                             .withCapabilities(this.webdriver.Capabilities.chrome())
                             .setChromeOptions(new chrome.Options().headless())
                             .build();
-                    } else {
+                    }
+                    else {
                         this.driver = new this.webdriver.Builder()
                             .withCapabilities(this.webdriver.Capabilities.chrome())
                             .build();
@@ -32,14 +32,15 @@ export class TasteeEngine {
                     break;
                 case 'firefox':
                     var path = require('geckodriver').path;
-                    var service = new firefox.ServiceBuilder(path).build();
-                    firefox.setDefaultService(service);
+                    console.log('driver use : ' + path);
                     if (headlessMode) {
+                        var firefox = require('selenium-webdriver/firefox');
                         this.driver = new this.webdriver.Builder()
                             .withCapabilities(this.webdriver.Capabilities.firefox())
                             .setChromeOptions(new firefox.Options().headless())
                             .build();
-                    } else {
+                    }
+                    else {
                         this.driver = new this.webdriver.Builder()
                             .withCapabilities(this.webdriver.Capabilities.firefox())
                             .build();
