@@ -13,10 +13,13 @@ NodeJs is installed  (V5 +)
 ## Getting Started
 
 ### with UI
-Please have a look at https://github.com/tastee/tastee-ui to get started with Tastee-UI as an end user
+Please have a look at https://github.com/tastee/tastee-ui to get started with Tastee-UI as an end user.
+
+### with Docker
+Please have a look at https://github.com/tastee/tastee-docker to get started with Tastee runner within docker.
 
 ### with NPM
-Please have a look at https://github.com/tastee/tastee-npm to get started with Tastee as command line tool
+Please have a look at https://github.com/tastee/tastee-npm to get started with Tastee as command line tool.
 
 ### In your own application
 Tastee core can be intregrated in your own application where you can easisly control it with `TasteeCore` Object.
