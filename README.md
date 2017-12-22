@@ -11,7 +11,40 @@ Core of the tastee test framework : test made Natural
 NodeJs is installed  (V5 +)
 
 ## Getting Started
-TODO
+
+### with UI
+Please have a look at https://github.com/tastee/tastee-ui to get started with Tastee-UI as an end user
+
+### with NPM
+Please have a look at https://github.com/tastee/tastee-npm to get started with Tastee as command line tool
+
+### In your own application
+Tastee core can be intregrated in your own application where you can easisly control it with `TasteeCore` Object.
+
+To Instanciate engine :
+```
+this.core = new TasteeCore(new TasteeAnalyser());
+```
+
+To launch tastee with your favorite browser (Chrome and Firefox supported by now) :
+```
+this.core.init(new TasteeEngine('chrome'|'firefox'));
+```
+
+To add Plugin file (`YAML`) in context :
+```
+this.core.addPluginFile(filePath);
+```
+
+To add parameter file (`Properties`) in context:
+```
+this.core.addParamFile(filePath);
+```
+
+To run tastee lines:
+```
+this.core.execute(myArrayOfTasteeLineAsString, filePath);
+```
 
 ## Install
 
