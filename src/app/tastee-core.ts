@@ -7,6 +7,8 @@ export class TasteeCore {
     analyser: TasteeAnalyser;
     engine: TasteeEngine;
 
+    private _engineInitialized = false;
+
     constructor(analyser: TasteeAnalyser) {
         this.analyser = analyser;
     }
@@ -14,6 +16,7 @@ export class TasteeCore {
     init(engine: TasteeEngine): void {
         this.engine = engine;
         this.analyser.init();
+        this._engineInitialized = true;
     }
 
     addPluginFile(filePath: string, onFileAdded?: () => void): void {
@@ -25,7 +28,10 @@ export class TasteeCore {
     }
 
     stop(): void {
-        this.engine.stop();
+        if(this._engineInitialized){
+            this.engine.stop();
+            this._engineInitialized = false;
+        }
     }
 
     execute(tasteeCode: string, tasteeFileName?: string): Promise<Instruction[]> {

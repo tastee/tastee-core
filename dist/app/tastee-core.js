@@ -2,11 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class TasteeCore {
     constructor(analyser) {
+        this._engineInitialized = false;
         this.analyser = analyser;
     }
     init(engine) {
         this.engine = engine;
         this.analyser.init();
+        this._engineInitialized = true;
     }
     addPluginFile(filePath, onFileAdded) {
         this.analyser.addPluginFile(filePath, onFileAdded);
@@ -15,7 +17,10 @@ class TasteeCore {
         this.analyser.addParamFile(filePath);
     }
     stop() {
-        this.engine.stop();
+        if (this._engineInitialized) {
+            this.engine.stop();
+            this._engineInitialized = false;
+        }
     }
     execute(tasteeCode, tasteeFileName) {
         return this.executeLines(tasteeCode.split('\n'), tasteeFileName);
