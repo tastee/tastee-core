@@ -33,9 +33,19 @@ export class TasteeAnalyser {
         let seleniumCodeLines:string[];
         let instructions = [];
         for (var i = 0; i < tasteeLinesArray.length; i++) {
-            var line = this._convertParamToValue(tasteeLinesArray[i].trim());
-            seleniumCodeLines = TasteeCodeMatcher.getSeleniumCodeFrom(line, this.tasteeCodes);            
-            instructions.push(new Instruction(i, line, seleniumCodeLines !== undefined ? seleniumCodeLines.join('\n') : ''));
+            var line = tasteeLinesArray[i].trim();
+            seleniumCodeLines = TasteeCodeMatcher.getSeleniumCodeFrom(line, this.tasteeCodes);
+
+            let command = '';
+            if(seleniumCodeLines !== undefined ){
+                for (var j = 0; j < seleniumCodeLines.length; j++) {
+                    command += this._convertParamToValue(seleniumCodeLines[j].trim());
+                    if(j !== seleniumCodeLines.length-1){
+                        command += '\n';
+                    }
+                }
+            }
+            instructions.push(new Instruction(i, line, command));
         }
         return instructions;
     }

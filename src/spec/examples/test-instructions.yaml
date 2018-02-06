@@ -6,3 +6,6 @@ call go to google :
 
 call go to $url:
     - go to $url
+
+visit selenium wikipedia :
+    - go to wikipedia.Selenium

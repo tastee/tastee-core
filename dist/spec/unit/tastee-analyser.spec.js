@@ -20,10 +20,10 @@ describe('Tastee Analyser', function () {
         expect(callbackCalled).toBe(true);
     });
     it("Add tastee code file as plugin - go to - verify paramters", function () {
-        expect(analyser.tasteeCodes[3].parameters[0]).toBe('$url');
+        expect(analyser.tasteeCodes[4].parameters[0]).toBe('$url');
     });
     it("Add tastee code file as plugin - click on - verify codeLines", function () {
-        expect(analyser.tasteeCodes[4].codeLines[0]).toBe('driver.findElement(By.css($name)).click();');
+        expect(analyser.tasteeCodes[5].codeLines[0]).toBe('driver.findElement(By.css($name)).click();');
     });
     it("Translate tastee code to selenium code - go to", function () {
         var instructions = analyser.toSeleniumCode(["go to 'http://www.google.fr'"]);
@@ -59,6 +59,11 @@ describe('Tastee Analyser', function () {
         //see ./spec/examples/test-instructions.yaml
         var instructions = analyser.toSeleniumCode(["call go to 'http://www.google.fr'"]);
         expect(instructions[0].command).toBe("driver.get('http://www.google.fr');");
+    });
+    it("manages intructions that call parameters", function () {
+        //see ./spec/examples/test-instructions.yaml
+        var instructions = analyser.toSeleniumCode(["visit selenium wikipedia"]);
+        expect(instructions[0].command).toBe("driver.get('https://en.wikipedia.org/wiki/Selenium');");
     });
 });
 
