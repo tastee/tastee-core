@@ -41,6 +41,11 @@ class TasteeAnalyser {
     }
     addParamFile(filePath) {
         this.properties.append(filePath);
+        this.sortedKeys = Object.keys(this.properties.getAllProperties());
+        this.sortedKeys.sort(function (a, b) {
+            // DESC -> b.length - a.length
+            return b.length - a.length;
+        });
     }
     setParam(key, value) {
         this.properties.set(key, value);
@@ -58,7 +63,9 @@ class TasteeAnalyser {
         this._reviewInnerTasteeCode(0);
     }
     _convertParamToValue(tasteeLine) {
-        this.properties.each((key, value) => {
+        //iterate on key by length in order to make sure, we don't mix keys using split
+        this.sortedKeys.forEach((key) => {
+            let value = this.properties.get(key);
             tasteeLine = tasteeLine.split(key).join("'" + value + "'");
         });
         return tasteeLine;

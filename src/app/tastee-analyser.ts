@@ -11,6 +11,7 @@ export class TasteeAnalyser {
 
     tasteeCodes:TasteeCode[];
     properties:any;
+    sortedKeys: string[];
 
     constructor(){
         this.init();
@@ -52,6 +53,11 @@ export class TasteeAnalyser {
 
     addParamFile(filePath) : void {
         this.properties.append(filePath);
+        this.sortedKeys = Object.keys(this.properties.getAllProperties());
+        this.sortedKeys.sort(function(a, b){
+            // DESC -> b.length - a.length
+            return b.length - a.length;
+        });
     }
 
     setParam(key : string, value : string){
@@ -71,8 +77,10 @@ export class TasteeAnalyser {
         this._reviewInnerTasteeCode(0);
     }
 
-    private _convertParamToValue(tasteeLine) : string {
-        this.properties.each((key, value) => {
+    private _convertParamToValue(tasteeLine: string) : string {
+        //iterate on key by length in order to make sure, we don't mix keys using split
+        this.sortedKeys.forEach((key) => {
+            let value = this.properties.get(key);
             tasteeLine = tasteeLine.split(key).join("'"+value+"'");
         });
         return tasteeLine;

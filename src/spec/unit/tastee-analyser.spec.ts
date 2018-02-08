@@ -80,4 +80,11 @@ describe('Tastee Analyser', function () {
         var instructions = analyser.toSeleniumCode(["visit selenium wikipedia"]);
         expect(instructions[0].command).toBe("driver.get('https://en.wikipedia.org/wiki/Selenium');");
     });
+
+
+    fit("do not mix similar parameters", function() {
+        //see ./spec/examples/my-parameters.properties
+        var instructions = analyser.toSeleniumCode(["complete.first.task"]);
+        expect(instructions[0].command).toBe("'good'");
+    });
 });
