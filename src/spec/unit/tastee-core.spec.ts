@@ -12,7 +12,7 @@ describe('Tastee Core', function () {
     let someCallback = () => {};
 
     beforeEach(function () {
-        tasteeAnalyser = jasmine.createSpyObj("TasteeAnalyser", ["addPluginFile", "addParamFile", "toSeleniumCode", "init"]);
+        tasteeAnalyser = jasmine.createSpyObj("TasteeAnalyser", ["addPluginFile", "addParamFile", "toJsCode", "init"]);
         tasteeEngine = jasmine.createSpyObj("TasteeEngine", ["stop", "execute"]);
         core = new TasteeCore(tasteeAnalyser);
         core.init(tasteeEngine);
@@ -49,11 +49,11 @@ describe('Tastee Core', function () {
         let tasteeCode = "line1\nline2";
         let executableCode = [];
 
-        tasteeAnalyser.toSeleniumCode.and.returnValue(executableCode);
+        tasteeAnalyser.toJsCode.and.returnValue(executableCode);
 
         core.execute(tasteeCode,"nameOfTasteeFile");
 
-        expect(tasteeAnalyser.toSeleniumCode).toHaveBeenCalledWith(["line1","line2"]);
+        expect(tasteeAnalyser.toJsCode).toHaveBeenCalledWith(["line1","line2"]);
         expect(tasteeEngine.execute).toHaveBeenCalledWith(executableCode,"nameOfTasteeFile");
     });
 

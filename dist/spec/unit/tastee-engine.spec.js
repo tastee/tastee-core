@@ -8,33 +8,20 @@ describe('Tastee Engine', function () {
     let engine;
     beforeEach(function () {
         engine = new tastee_engine_1.TasteeEngine(null);
-        let driver = jasmine.createSpyObj("driver", ["quit"]);
-        engine.driver = driver;
-        engine.webdriver.promise = promise;
+        let browser = jasmine.createSpyObj("browser", ["close", "By"]);
+        engine.browser = browser;
     });
     it(" quits selenium driver properly", function () {
         engine.stop();
-        expect(engine.driver.quit).toHaveBeenCalled();
+        expect(engine.browser.close).toHaveBeenCalled();
     });
     it(" execute simple js code", function () {
         var sum = 0;
-        engine.webdriver.By = () => { sum = +1 + 1; };
-        let instruction = new instruction_1.Instruction(1, 'a line', 'By();');
+        engine.page = () => { sum = +1 + 1; };
+        let instruction = new instruction_1.Instruction(1, 'a line', 'page();');
         engine.execute([instruction], "nameOfTasteeFile");
         expect(sum).toBe(2);
     });
 });
-let promise = {
-    controlFlow() {
-        return new Flow();
-    }
-};
-class Flow {
-    execute(callback) {
-        this.jasmineCallback = callback;
-        this.jasmineCallback('execute');
-        return new Promise(this.jasmineCallback);
-    }
-}
 
 //# sourceMappingURL=tastee-engine.spec.js.map

@@ -1,7 +1,4 @@
 import { Instruction } from './instruction';
-import * as fs from 'fs';
-import * as path from 'path';
-import * as mustache from 'mustache';
 
 export class TasteeReporter {
 

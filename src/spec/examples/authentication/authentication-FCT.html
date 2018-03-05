@@ -1,21 +1,3 @@
-
-//test empty authentication
-go to 'file:///media/astalin/DATA/Documents/perso/tastee/tastee.github.io/index.html'
-connect using '' and '' as credentials
-check that '#step1Done' is equal to 'Bad Credentials'
-
-//test no password authentication
-connect using 'webdriver' and '' as credentials
-check that '#step1Done' is equal to 'Bad Credentials'
-
-//test no login authentication
-connect using '' and 'webdriver' as credentials
-check that '#step1Done' is equal to 'Bad Credentials'
-
-//test bad password authentication
-connect using 'webdriver' and 'webdriverBad' as credentials
-check that '#step1Done' is equal to 'Bad Credentials'
-
-//test ok authentication
-connect using 'webdriver' and 'webdriver' as credentials
-check that '#step1Done' is equal to 'Great ! It seems that you\'ve completed the first step succesfully.\nWelcome within the great world of reliable tests !'
+//test
+go to 'https://tastee.github.io'
+getting started title is 'How to use Tastee ?'

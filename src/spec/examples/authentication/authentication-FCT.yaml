@@ -1,6 +1,3 @@
-- connect using $login and $password as credentials:
-  - clear '#login' field
-  - clear '#password' field
-  - fill '#login' field with $login
-  - fill '#password' field with $password
-  - click on '#Go'
+getting started title is $title:
+  - click on '#download-button'
+  - check that 'body > div:nth-child(9) > div > div > div > h2' is equal to $title

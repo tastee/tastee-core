@@ -30,18 +30,18 @@ export class TasteeAnalyser {
         }
     }
 
-    toSeleniumCode(tasteeLinesArray : string[]) : Instruction[] {
-        let seleniumCodeLines:string[];
+    toJsCode(tasteeLinesArray : string[]) : Instruction[] {
+        let jsCodeLines:string[];
         let instructions = [];
         for (var i = 0; i < tasteeLinesArray.length; i++) {
             var line = tasteeLinesArray[i].trim();
-            seleniumCodeLines = TasteeCodeMatcher.getSeleniumCodeFrom(line, this.tasteeCodes);
+            jsCodeLines = TasteeCodeMatcher.getJsCodeFrom(line, this.tasteeCodes);
 
             let command = '';
-            if(seleniumCodeLines !== undefined ){
-                for (var j = 0; j < seleniumCodeLines.length; j++) {
-                    command += this._convertParamToValue(seleniumCodeLines[j].trim());
-                    if(j !== seleniumCodeLines.length-1){
+            if(jsCodeLines !== undefined ){
+                for (var j = 0; j < jsCodeLines.length; j++) {
+                    command += this._convertParamToValue(jsCodeLines[j].trim());
+                    if(j !== jsCodeLines.length-1){
                         command += '\n';
                     }
                 }
@@ -69,7 +69,7 @@ export class TasteeAnalyser {
         for(let key of Object.keys(data)){
             let tasteeCode = new TasteeCode(key);
             for(let instruction of data[key]){
-                tasteeCode.addCodeLines(TasteeCodeMatcher.getSeleniumCodeFrom(instruction, this.tasteeCodes))
+                tasteeCode.addCodeLines(TasteeCodeMatcher.getJsCodeFrom(instruction, this.tasteeCodes))
             }
             this.tasteeCodes.push(tasteeCode);     
         }
@@ -79,10 +79,12 @@ export class TasteeAnalyser {
 
     private _convertParamToValue(tasteeLine: string) : string {
         //iterate on key by length in order to make sure, we don't mix keys using split
-        this.sortedKeys.forEach((key) => {
-            let value = this.properties.get(key);
-            tasteeLine = tasteeLine.split(key).join("'"+value+"'");
-        });
+        if(this.sortedKeys) {
+            this.sortedKeys.forEach((key) => {
+                let value = this.properties.get(key);
+                tasteeLine = tasteeLine.split(key).join("'"+value+"'");
+            });
+        }
         return tasteeLine;
     }
 
@@ -94,7 +96,7 @@ export class TasteeAnalyser {
             for (let tasteeCode of this.tasteeCodes) {
                 newLines = [];
                 for (let line of tasteeCode.codeLines) {
-                    let seleniumLines = TasteeCodeMatcher.getSeleniumCodeFrom(line, this.tasteeCodes);
+                    let seleniumLines = TasteeCodeMatcher.getJsCodeFrom(line, this.tasteeCodes);
 
                     newLines = newLines.concat(seleniumLines);
 

@@ -1,5 +1,3 @@
-import * as util from 'util';
-
 export class TasteeCode {
     instructionWithParameters: string;
     parameters: string[];
@@ -22,12 +20,12 @@ export class TasteeCode {
         this.codeLines = this.codeLines.concat(codeLines);
     }
 
-    toSeleniumCodeLines(matchingArray: string[]): string[] {
-        var seleniumCode = [];
+    toJsCodeLines(matchingArray: string[]): string[] {
+        var jsCode = [];
         for (let line of this.codeLines) {
-            seleniumCode.push(this._replaceTasteeParameters(line, matchingArray));
+            jsCode.push(this._replaceTasteeParameters(line, matchingArray));
         }
-        return seleniumCode;
+        return jsCode;
     }
 
     private _replaceTasteeParameters(codeLine: string, matcherArray: string[]): string {
@@ -51,10 +49,10 @@ export class TasteeCodeMatcher{
     }
 
     private toSeleniumCodeLines() : string[] {
-        return this.tasteeCode.toSeleniumCodeLines(this.matchingArray);
+        return this.tasteeCode.toJsCodeLines(this.matchingArray);
     }
 
-    static getSeleniumCodeFrom(tasteeLine : string, tasteeCodes : TasteeCode[]) : string[] {
+    static getJsCodeFrom(tasteeLine : string, tasteeCodes : TasteeCode[]) : string[] {
         let tasteeCodeMatcher = this._isTasteeCode(tasteeLine, tasteeCodes);
         if (tasteeCodeMatcher) {
             return tasteeCodeMatcher.toSeleniumCodeLines();

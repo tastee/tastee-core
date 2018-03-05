@@ -26,8 +26,8 @@ class TasteeCore {
         return this.executeLines(tasteeCode.split('\n'), tasteeFileName);
     }
     executeLines(tasteeCode, tasteeFileName) {
-        var seleniumCode = this.analyser.toSeleniumCode(tasteeCode);
-        return this.engine.execute(seleniumCode, tasteeFileName);
+        var jsCode = this.analyser.toJsCode(tasteeCode);
+        return this.engine.execute(jsCode, tasteeFileName);
     }
 }
 exports.TasteeCore = TasteeCore;

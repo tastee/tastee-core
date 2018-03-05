@@ -23,51 +23,48 @@ describe('Tastee Analyser', function () {
         expect(analyser.tasteeCodes[4].parameters[0]).toBe('$url');
     });
     it("Add tastee code file as plugin - click on - verify codeLines", function () {
-        expect(analyser.tasteeCodes[5].codeLines[0]).toBe('driver.findElement(By.css($name)).click();');
+        expect(analyser.tasteeCodes[5].codeLines[0]).toBe('page.waitForSelector($name);');
     });
     it("Translate tastee code to selenium code - go to", function () {
-        var instructions = analyser.toSeleniumCode(["go to 'http://www.google.fr'"]);
+        var instructions = analyser.toJsCode(["go to 'http://www.google.fr'"]);
         expect(instructions.length).toBe(1);
-        expect(instructions[0].command).toBe("driver.get('http://www.google.fr');");
+        expect(instructions[0].command).toBe("page.goto('http://www.google.fr');");
         expect(instructions[0].tasteeLine).toBe("go to 'http://www.google.fr'");
     });
     it("Translate tastee code to selenium code - verify", function () {
-        var instructions = analyser.toSeleniumCode(["check that 'myField' is equal to 'myValue'"]);
-        expect(instructions[0].command).toBe("var element = driver.findElement(By.css('myField'));\n" +
-            "element.getText().then(function(text) { assert.equal(text, 'myValue', 'the '+ 'myField' + ' element contains '+text); });");
+        var instructions = analyser.toJsCode(["check that 'myField' is equal to 'myValue'"]);
+        expect(instructions[0].command).toBe("page.$eval('myField', e => e.innerHTML).then(html => { assert.equal(html, 'myValue', 'the '+ 'myField' + ' element contains '+html); });");
     });
     it("Translate using parameters", function () {
-        var instructions = analyser.toSeleniumCode(['check that param.field is equal to param.value']);
-        expect(instructions[0].command).toBe("var element = driver.findElement(By.css('myField'));\n" +
-            "element.getText().then(function(text) { assert.equal(text, 'myValue', 'the '+ 'myField' + ' element contains '+text); });");
+        var instructions = analyser.toJsCode(['check that param.field is equal to param.value']);
+        expect(instructions[0].command).toBe("page.$eval('myField', e => e.innerHTML).then(html => { assert.equal(html, 'myValue', 'the '+ 'myField' + ' element contains '+html); });");
     });
     it("manage multiple occurences of function parameters when translating", function () {
-        var instructions = analyser.toSeleniumCode(["log some 'thisValue' twice"]);
+        var instructions = analyser.toJsCode(["log some 'thisValue' twice"]);
         expect(instructions[0].command).toBe("console.log('log once '+'thisValue'+', and twice '+'thisValue');");
     });
     it("manage multiple occurences of external parameters when translating", function () {
-        var instructions = analyser.toSeleniumCode(['check that param.field is equal to param.field']);
-        expect(instructions[0].command).toBe("var element = driver.findElement(By.css('myField'));\n" +
-            "element.getText().then(function(text) { assert.equal(text, 'myField', 'the '+ 'myField' + ' element contains '+text); });");
+        var instructions = analyser.toJsCode(['check that param.field is equal to param.field']);
+        expect(instructions[0].command).toBe("page.$eval('myField', e => e.innerHTML).then(html => { assert.equal(html, 'myField', 'the '+ 'myField' + ' element contains '+html); });");
     });
     it("manages intructions that call other instruction", function () {
         //see ./spec/examples/test-instructions.yaml
-        var instructions = analyser.toSeleniumCode(['call go to google']);
-        expect(instructions[0].command).toBe("driver.get('http://www.google.fr');");
+        var instructions = analyser.toJsCode(['call go to google']);
+        expect(instructions[0].command).toBe("page.goto('http://www.google.fr');");
     });
     it("manages intructions that call other instruction and parameters", function () {
         //see ./spec/examples/test-instructions.yaml
-        var instructions = analyser.toSeleniumCode(["call go to 'http://www.google.fr'"]);
-        expect(instructions[0].command).toBe("driver.get('http://www.google.fr');");
+        var instructions = analyser.toJsCode(["call go to 'http://www.google.fr'"]);
+        expect(instructions[0].command).toBe("page.goto('http://www.google.fr');");
     });
     it("manages intructions that call parameters", function () {
         //see ./spec/examples/test-instructions.yaml
-        var instructions = analyser.toSeleniumCode(["visit selenium wikipedia"]);
-        expect(instructions[0].command).toBe("driver.get('https://en.wikipedia.org/wiki/Selenium');");
+        var instructions = analyser.toJsCode(["visit selenium wikipedia"]);
+        expect(instructions[0].command).toBe("page.goto('https://en.wikipedia.org/wiki/Selenium');");
     });
-    fit("do not mix similar parameters", function () {
+    it("do not mix similar parameters", function () {
         //see ./spec/examples/my-parameters.properties
-        var instructions = analyser.toSeleniumCode(["first.task"]);
+        var instructions = analyser.toJsCode(["complete.first.task"]);
         expect(instructions[0].command).toBe("'good'");
     });
 });

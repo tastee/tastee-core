@@ -88,7 +88,7 @@ gulp.task('rebuild', function () {
 });
 
 //integration test task
-gulp.task('it', ['rebuild'], function () {
+gulp.task('it', ['build'], function () {
         gulp.src('./dist/spec/it/**/*.spec.js').pipe(jasmine());
 });
 

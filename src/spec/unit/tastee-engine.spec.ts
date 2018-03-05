@@ -10,22 +10,21 @@ describe('Tastee Engine', function () {
 
     beforeEach(function () {
         engine = new TasteeEngine(null);
-        let driver = jasmine.createSpyObj("driver", ["quit"]);
-        engine.driver = driver;
-        engine.webdriver.promise = promise;
+        let browser = jasmine.createSpyObj("browser", ["close", "By"]);
+        engine.browser = browser;
     });
 
 
     it(" quits selenium driver properly", function () {
         engine.stop();
-        expect(engine.driver.quit).toHaveBeenCalled();
+        expect(engine.browser.close).toHaveBeenCalled();
     });
 
     it(" execute simple js code", function () {
         var sum = 0
-        engine.webdriver.By = () => { sum = +1 + 1; };
+        engine.page = () => { sum = +1 + 1; };
 
-        let instruction = new Instruction(1, 'a line', 'By();');
+        let instruction = new Instruction(1, 'a line', 'page();');
 
         engine.execute([instruction], "nameOfTasteeFile");
 
@@ -33,19 +32,3 @@ describe('Tastee Engine', function () {
     });
 
 });
-
-let promise = {
-    controlFlow() {
-        return new Flow();
-    }
-}
-
-class Flow {
-    jasmineCallback: any;
-
-    execute(callback) {
-        this.jasmineCallback = callback;
-        this.jasmineCallback('execute');
-        return new Promise(this.jasmineCallback);
-    }
-}

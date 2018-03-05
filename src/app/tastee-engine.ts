@@ -5,58 +5,30 @@ var assert = require('assert');
 
 export class TasteeEngine {
 
-    webdriver = require('selenium-webdriver');
+    puppeteer = require('puppeteer');
     reporter: TasteeReporter;
 
-    driver: any;
+    page: any;
+    browser: any;
+    headless = false;
 
-    constructor(browser: string, headlessMode: Boolean = false) {
-        if (browser) {
-            this.webdriver = require('selenium-webdriver');
-            switch (browser) {
-                case 'chrome':
-                    if (headlessMode) {
-                        var chrome = require('selenium-webdriver/chrome');
-                        this.driver = new this.webdriver.Builder()
-                            .withCapabilities(this.webdriver.Capabilities.chrome())
-                            .setChromeOptions(new chrome.Options().headless())
-                            .build();
-                    }
-                    else {
-                        this.driver = new this.webdriver.Builder()
-                            .forBrowser('chrome')
-                            .build();
-                    }
-                    break;
-                case 'firefox':
-                    if (headlessMode) {
-                        var firefox = require('selenium-webdriver/firefox');
-                        this.driver = new this.webdriver.Builder()
-                            .withCapabilities(this.webdriver.Capabilities.firefox())
-                            .setFirefoxOptions(new firefox.Options().headless())
-                            .build();
-                    }
-                    else {
-                        this.driver = new this.webdriver.Builder()
-                            .forBrowser('firefox')
-                            .build();
-                    }
-                    break;
-            }
-        }
+    constructor(headlessMode: boolean = false) {
         this.reporter = new TasteeReporter();
+        this.headless = headlessMode;
     }
 
-    stop(): void {
-        this.driver.quit();
+    stop(): void {(async () => {
+        await this.browser.close();
+    })();
     }
 
     async execute(codeToExecute: Instruction[], tasteeFileName: string): Promise<Instruction[]> {
-        var By = this.webdriver.By;
-        var Key = this.webdriver.Key;
-        var until = this.webdriver.until;
-        var Actions = this.webdriver.Actions;
-        let driver = this.driver;
+        if(!this.page){
+            this.browser = await this.puppeteer.launch({headless: this.headless});
+            this.page = await this.browser.newPage();
+        }
+        var page = this.page;
+        var browser = this.browser;
         let reporter = this.reporter;
         for (var idx = 0; idx < codeToExecute.length; idx++) {
             try {

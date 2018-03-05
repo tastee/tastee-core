@@ -15,12 +15,12 @@ class TasteeCode {
     addCodeLines(codeLines) {
         this.codeLines = this.codeLines.concat(codeLines);
     }
-    toSeleniumCodeLines(matchingArray) {
-        var seleniumCode = [];
+    toJsCodeLines(matchingArray) {
+        var jsCode = [];
         for (let line of this.codeLines) {
-            seleniumCode.push(this._replaceTasteeParameters(line, matchingArray));
+            jsCode.push(this._replaceTasteeParameters(line, matchingArray));
         }
-        return seleniumCode;
+        return jsCode;
     }
     _replaceTasteeParameters(codeLine, matcherArray) {
         if (this.parameters) {
@@ -38,9 +38,9 @@ class TasteeCodeMatcher {
         this.matchingArray = matchingArray;
     }
     toSeleniumCodeLines() {
-        return this.tasteeCode.toSeleniumCodeLines(this.matchingArray);
+        return this.tasteeCode.toJsCodeLines(this.matchingArray);
     }
-    static getSeleniumCodeFrom(tasteeLine, tasteeCodes) {
+    static getJsCodeFrom(tasteeLine, tasteeCodes) {
         let tasteeCodeMatcher = this._isTasteeCode(tasteeLine, tasteeCodes);
         if (tasteeCodeMatcher) {
             return tasteeCodeMatcher.toSeleniumCodeLines();

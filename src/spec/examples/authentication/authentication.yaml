@@ -1,47 +1,10 @@
-test empty authentication:
-    - driver.get('file:///media/astalin/DATA/Documents/perso/tastee/tastee.github.io/index.html');
-    - driver.findElement(By.id('Go')).click();
-    - driver.findElement(By.id('step1Done')).getText().then(function(text) {
-        assert.equal(text, 'Bad Credentials');
+test getting started:
+    - page.goto('https://tastee.github.io').then( () => {
+        page.waitForSelector('#download-button').then( () => {
+          page.click('#download-button').then( () => {
+            page.$eval('body > div:nth-child(9) > div > div > div > h2', e => e.innerHTML).then(html => {
+               assert.equal(html, 'How to use Tastee ?', 'the element contains '+html);
+             });
+          });
         });
-
-test no password authentication:
-    - //no password
-    - driver.findElement(By.id('login')).sendKeys('webdriver');
-    - driver.findElement(By.id('Go')).click();
-    - driver.findElement(By.id('step1Done')).getText().then(function(text) {
-        assert.equal(text, 'Bad Credentials');
-        });
-
-test no login authentication:
-    - //no login
-    - driver.findElement(By.id('login')).clear();
-    - driver.findElement(By.id('password')).clear();
-    - driver.findElement(By.id('login')).sendKeys('');
-    - driver.findElement(By.id('password')).sendKeys('webdriver');
-    - driver.findElement(By.id('Go')).click();
-    - driver.findElement(By.id('step1Done')).getText().then(function(text) {
-         assert.equal(text, 'Bad Credentials');
-      });
-
-test bad password authentication:
-    - //bad password
-    - driver.findElement(By.id('login')).clear();
-    - driver.findElement(By.id('password')).clear();
-    - driver.findElement(By.id('login')).sendKeys('webdriver');
-    - driver.findElement(By.id('password')).sendKeys('webdriverBad');
-    - driver.findElement(By.id('Go')).click();
-    - driver.findElement(By.id('step1Done')).getText().then(function(text) {
-        assert.equal(text, 'Bad Credentials');
-      });
-
-test ok authentication:
-    - //OK
-    - driver.findElement(By.id('login')).clear();
-    - driver.findElement(By.id('password')).clear();
-    - driver.findElement(By.id('login')).sendKeys('webdriver');
-    - driver.findElement(By.id('password')).sendKeys('webdriver');
-    - driver.findElement(By.id('Go')).click();
-    - driver.findElement(By.id('step1Done')).getText().then(function(text) {
-        assert.equal(text, 'Great ! It seems that you\'ve completed the first step succesfully.\nWelcome within the great world of reliable tests !');
       });

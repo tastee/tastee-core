@@ -20,17 +20,17 @@ class TasteeAnalyser {
             return callback();
         }
     }
-    toSeleniumCode(tasteeLinesArray) {
-        let seleniumCodeLines;
+    toJsCode(tasteeLinesArray) {
+        let jsCodeLines;
         let instructions = [];
         for (var i = 0; i < tasteeLinesArray.length; i++) {
             var line = tasteeLinesArray[i].trim();
-            seleniumCodeLines = tastee_code_1.TasteeCodeMatcher.getSeleniumCodeFrom(line, this.tasteeCodes);
+            jsCodeLines = tastee_code_1.TasteeCodeMatcher.getJsCodeFrom(line, this.tasteeCodes);
             let command = '';
-            if (seleniumCodeLines !== undefined) {
-                for (var j = 0; j < seleniumCodeLines.length; j++) {
-                    command += this._convertParamToValue(seleniumCodeLines[j].trim());
-                    if (j !== seleniumCodeLines.length - 1) {
+            if (jsCodeLines !== undefined) {
+                for (var j = 0; j < jsCodeLines.length; j++) {
+                    command += this._convertParamToValue(jsCodeLines[j].trim());
+                    if (j !== jsCodeLines.length - 1) {
                         command += '\n';
                     }
                 }
@@ -55,7 +55,7 @@ class TasteeAnalyser {
         for (let key of Object.keys(data)) {
             let tasteeCode = new tastee_code_1.TasteeCode(key);
             for (let instruction of data[key]) {
-                tasteeCode.addCodeLines(tastee_code_1.TasteeCodeMatcher.getSeleniumCodeFrom(instruction, this.tasteeCodes));
+                tasteeCode.addCodeLines(tastee_code_1.TasteeCodeMatcher.getJsCodeFrom(instruction, this.tasteeCodes));
             }
             this.tasteeCodes.push(tasteeCode);
         }
@@ -64,10 +64,12 @@ class TasteeAnalyser {
     }
     _convertParamToValue(tasteeLine) {
         //iterate on key by length in order to make sure, we don't mix keys using split
-        this.sortedKeys.forEach((key) => {
-            let value = this.properties.get(key);
-            tasteeLine = tasteeLine.split(key).join("'" + value + "'");
-        });
+        if (this.sortedKeys) {
+            this.sortedKeys.forEach((key) => {
+                let value = this.properties.get(key);
+                tasteeLine = tasteeLine.split(key).join("'" + value + "'");
+            });
+        }
         return tasteeLine;
     }
     _reviewInnerTasteeCode(reviewNumber) {
@@ -77,7 +79,7 @@ class TasteeAnalyser {
             for (let tasteeCode of this.tasteeCodes) {
                 newLines = [];
                 for (let line of tasteeCode.codeLines) {
-                    let seleniumLines = tastee_code_1.TasteeCodeMatcher.getSeleniumCodeFrom(line, this.tasteeCodes);
+                    let seleniumLines = tastee_code_1.TasteeCodeMatcher.getJsCodeFrom(line, this.tasteeCodes);
                     newLines = newLines.concat(seleniumLines);
                     if (line != seleniumLines[0]) {
                         hasChanged = true;

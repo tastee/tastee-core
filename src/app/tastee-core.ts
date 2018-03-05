@@ -39,8 +39,8 @@ export class TasteeCore {
     }
 
     executeLines(tasteeCode: string[], tasteeFileName?: string): Promise<Instruction[]> {
-        var seleniumCode = this.analyser.toSeleniumCode(tasteeCode);
-        return this.engine.execute(seleniumCode, tasteeFileName);
+        var jsCode = this.analyser.toJsCode(tasteeCode);
+        return this.engine.execute(jsCode, tasteeFileName);
     }
 }
 
