@@ -3,9 +3,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tastee_engine_1 = require("../../app/tastee-engine");
 const instruction_1 = require("../../app/instruction");
+const logger = require("winston");
 ////////  SPECS  /////////////
 describe('Tastee Engine', function () {
     let engine;
+    logger.configure({
+        level: 'debug',
+        transports: [
+            new logger.transports.Console({
+                colorize: true
+            })
+        ]
+    });
     beforeEach(function () {
         engine = new tastee_engine_1.TasteeEngine(null);
         let driver = jasmine.createSpyObj("driver", ["quit"]);

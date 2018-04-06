@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const tastee_reporter_1 = require("./tastee-reporter");
+const logger = require("winston");
 var assert = require('assert');
 class TasteeEngine {
     constructor(browser, headlessMode = false) {
@@ -61,11 +62,14 @@ class TasteeEngine {
             let reporter = this.reporter;
             for (var idx = 0; idx < codeToExecute.length; idx++) {
                 try {
+                    logger.debug('Executing : %s', codeToExecute[idx].command);
                     yield eval(codeToExecute[idx].command);
+                    logger.debug('Execution SUCCESS');
                     yield codeToExecute[idx].setValid(true);
                 }
                 catch (error) {
-                    console.log(error);
+                    logger.debug('Execution Failed : %s', error);
+                    logger.error(error);
                     yield codeToExecute[idx].setValid(false);
                     yield codeToExecute[idx].setErrorMessage(error.message);
                 }

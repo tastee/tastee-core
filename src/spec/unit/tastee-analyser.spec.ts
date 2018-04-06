@@ -82,7 +82,7 @@ describe('Tastee Analyser', function () {
     });
 
 
-    fit("do not mix similar parameters", function() {
+    it("do not mix similar parameters", function() {
         //see ./spec/examples/my-parameters.properties
         var instructions = analyser.toSeleniumCode(["complete.first.task"]);
         expect(instructions[0].command).toBe("'good'");

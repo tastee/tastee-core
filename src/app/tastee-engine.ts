@@ -1,5 +1,6 @@
 import { Instruction } from './instruction';
 import { TasteeReporter } from './tastee-reporter';
+import * as logger from "winston";
 declare var assert: any;
 var assert = require('assert');
 
@@ -11,6 +12,7 @@ export class TasteeEngine {
     driver: any;
 
     constructor(browser: string, headlessMode: Boolean = false) {
+        
         if (browser) {
             this.webdriver = require('selenium-webdriver');
             switch (browser) {
@@ -60,10 +62,13 @@ export class TasteeEngine {
         let reporter = this.reporter;
         for (var idx = 0; idx < codeToExecute.length; idx++) {
             try {
+                logger.debug('Executing : %s', codeToExecute[idx].command)
                 await eval(codeToExecute[idx].command);
+                logger.debug('Execution SUCCESS');
                 await codeToExecute[idx].setValid(true);
             } catch (error) {
-                console.log(error);
+                logger.debug('Execution Failed : %s', error);
+                logger.error(error);
                 await codeToExecute[idx].setValid(false);
                 await codeToExecute[idx].setErrorMessage(error.message);
             }

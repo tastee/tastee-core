@@ -3,10 +3,20 @@
 import { TasteeEngine } from "../../app/tastee-engine";
 import { Instruction } from "../../app/instruction";
 
+import * as logger from "winston";
 ////////  SPECS  /////////////
 
 describe('Tastee Engine', function () {
     let engine: TasteeEngine;
+
+    logger.configure({
+        level: 'debug',
+        transports: [
+            new logger.transports.Console({
+                colorize: true
+            })
+        ]
+    });
 
     beforeEach(function () {
         engine = new TasteeEngine(null);
