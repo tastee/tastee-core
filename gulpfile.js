@@ -88,8 +88,8 @@ gulp.task('rebuild', function () {
 });
 
 //integration test task
-gulp.task('it', ['rebuild'], function () {
-        gulp.src('./dist/spec/it/**/*.spec.js').pipe(jasmine());
+gulp.task('it', ['build:clean', 'rebuild'], function () {
+        gulp.src('./dist/src/spec/it/**/*.spec.js').pipe(jasmine());
 });
 
 function remapCoverageFiles () {

@@ -6,7 +6,7 @@ const tastee_engine_1 = require("../../app/tastee-engine");
 var assert = require("assert");
 const core = require('../../app/tastee-core');
 var fs = require("fs");
-describe("Tastee Core Engine", function () {
+xdescribe("Tastee Core Engine", function () {
     let core;
     beforeEach(function (done) {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;

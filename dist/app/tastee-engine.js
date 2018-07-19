@@ -9,24 +9,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const tastee_reporter_1 = require("./tastee-reporter");
+const selenium = require("selenium-webdriver");
 const logger = require("winston");
-var assert = require('assert');
+const assert = require('assert');
 class TasteeEngine {
     constructor(browser, headlessMode = false) {
-        this.webdriver = require('selenium-webdriver');
         if (browser) {
-            this.webdriver = require('selenium-webdriver');
             switch (browser) {
                 case 'chrome':
                     if (headlessMode) {
                         var chrome = require('selenium-webdriver/chrome');
-                        this.driver = new this.webdriver.Builder()
-                            .withCapabilities(this.webdriver.Capabilities.chrome())
+                        this.driver = new selenium.Builder()
+                            .withCapabilities(selenium.Capabilities.chrome())
                             .setChromeOptions(new chrome.Options().headless())
                             .build();
                     }
                     else {
-                        this.driver = new this.webdriver.Builder()
+                        this.driver = new selenium.Builder()
                             .forBrowser('chrome')
                             .build();
                     }
@@ -34,16 +33,21 @@ class TasteeEngine {
                 case 'firefox':
                     if (headlessMode) {
                         var firefox = require('selenium-webdriver/firefox');
-                        this.driver = new this.webdriver.Builder()
-                            .withCapabilities(this.webdriver.Capabilities.firefox())
+                        this.driver = new selenium.Builder()
+                            .withCapabilities(selenium.Capabilities.firefox())
                             .setFirefoxOptions(new firefox.Options().headless())
                             .build();
                     }
                     else {
-                        this.driver = new this.webdriver.Builder()
+                        this.driver = new selenium.Builder()
                             .forBrowser('firefox')
                             .build();
                     }
+                    break;
+                default:
+                    this.driver = new selenium.Builder()
+                        .forBrowser('phantomjs')
+                        .build();
                     break;
             }
         }
@@ -54,27 +58,35 @@ class TasteeEngine {
     }
     execute(codeToExecute, tasteeFileName) {
         return __awaiter(this, void 0, void 0, function* () {
-            var By = this.webdriver.By;
-            var Key = this.webdriver.Key;
-            var until = this.webdriver.until;
-            var Actions = this.webdriver.Actions;
-            let driver = this.driver;
-            let reporter = this.reporter;
-            for (var idx = 0; idx < codeToExecute.length; idx++) {
-                try {
-                    logger.debug('Executing : %s', codeToExecute[idx].command);
-                    yield eval(codeToExecute[idx].command);
-                    logger.debug('Execution SUCCESS');
-                    yield codeToExecute[idx].setValid(true);
-                }
-                catch (error) {
-                    logger.debug('Execution Failed : %s', error);
-                    logger.error(error);
-                    yield codeToExecute[idx].setValid(false);
-                    yield codeToExecute[idx].setErrorMessage(error.message);
-                }
+            return this._executeCommand(codeToExecute);
+        });
+    }
+    _executeCommand(codeToExecute, currentLineIndex = 0) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (currentLineIndex === codeToExecute.length) {
+                return Promise.resolve(codeToExecute);
             }
-            return codeToExecute;
+            const By = selenium.By;
+            const Key = selenium.Key;
+            const until = selenium.until;
+            const Actions = selenium.ActionSequence;
+            const driver = this.driver;
+            const reporter = this.reporter;
+            const instruction = codeToExecute[currentLineIndex];
+            const result = eval(instruction.command);
+            return Promise.resolve(result)
+                .then(() => {
+                logger.debug('Execution SUCCESS.');
+                instruction.setValid(true);
+                return this._executeCommand(codeToExecute, currentLineIndex + 1);
+            })
+                .catch(error => {
+                logger.debug('Execution FAILED : %s', error);
+                logger.error(error);
+                instruction.setValid(false);
+                instruction.setErrorMessage(error.message);
+                return this._executeCommand(codeToExecute, currentLineIndex + 1);
+            });
         });
     }
 }
