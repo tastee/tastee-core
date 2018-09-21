@@ -33,7 +33,8 @@ describe('Tastee Engine', function () {
     it(" execute simple js code", (done) => {
         let instruction = new Instruction(1, 'a line', '1+1');
 
-        engine.execute([instruction], "nameOfTasteeFile").then(result => {
+        let promise = engine.execute([instruction], "nameOfTasteeFile");
+        promise.then(result => {
             expect(result.length).toBe(1);
             expect(result[0].valid).toBe(true);
             done();
@@ -46,6 +47,26 @@ describe('Tastee Engine', function () {
         engine.execute([instruction], "nameOfTasteeFile").then(result => {
             expect(result.length).toBe(1);
             expect(result[0].valid).toBe(true);
+            done();
+        });
+    });
+
+    it(" execute unknown instruction", (done) => {
+        let instruction = new Instruction(1, 'a line', 'bad code line');
+
+        engine.execute([instruction], "nameOfTasteeFile").then(result => {
+            expect(result.length).toBe(1);
+            expect(result[0].valid).toBe(false);
+            done();
+        });
+    });
+
+    it(" execute promise error", (done) => {
+        let instruction = new Instruction(1, 'a line', 'throw new Error("exception!");');
+
+        engine.execute([instruction], "nameOfTasteeFile").then(result => {
+            expect(result.length).toBe(1);
+            expect(result[0].valid).toBe(false);
             done();
         });
     });

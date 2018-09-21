@@ -59,7 +59,7 @@ export class TasteeEngine {
         return this._executeCommand(codeToExecute);
     }
 
-    private async _executeCommand(codeToExecute: Instruction[], currentLineIndex: number = 0) {
+    private async _executeCommand(codeToExecute: Instruction[], currentLineIndex: number = 0): Promise<Instruction[]> {
         if (currentLineIndex === codeToExecute.length) {
             return Promise.resolve(codeToExecute);
         }
@@ -71,21 +71,24 @@ export class TasteeEngine {
         const reporter = this.reporter;
 
         const instruction = codeToExecute[currentLineIndex];
-        console.log(instruction.command);
-        const result = eval(instruction.command);
-        return Promise.resolve(result)
-            .then(() => {
-                logger.debug('Execution SUCCESS.')
-                instruction.setValid(true);
-                return this._executeCommand(codeToExecute, currentLineIndex+1);
-            })
-            .catch(error => {
-                logger.debug('Execution FAILED : %s', error);
-                logger.error(error);
-                instruction.setValid(false);
-                instruction.setErrorMessage(error.message);
-                return this._executeCommand(codeToExecute, currentLineIndex+1);
-            });
+
+        return new Promise(function(resolve, reject) {
+            (eval(instruction.command));
+            resolve();
+        })
+        .then(() => {
+            logger.debug('Execution SUCCESS.')
+            instruction.setValid(true);
+            return this._executeCommand(codeToExecute, currentLineIndex+1);
+        })
+        .catch(error => {
+            logger.debug('Execution FAILED : %s', error);
+
+            instruction.setValid(false);
+            instruction.setErrorMessage(error.message);
+            return this._executeCommand(codeToExecute, currentLineIndex+1);
+        });
+       
     }
 
 }

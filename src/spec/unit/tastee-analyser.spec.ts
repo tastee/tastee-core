@@ -26,11 +26,11 @@ describe('Tastee Analyser', function () {
     });
 
     it("Add tastee code file as plugin - go to - verify paramters", function() {
-        expect(analyser.tasteeCodes[4].parameters[0]).toBe('$url');
+        expect(analyser.tasteeCodes[7].parameters[0]).toBe('$url');
     });
 
     it("Add tastee code file as plugin - click on - verify codeLines", function() {
-        expect(analyser.tasteeCodes[5].codeLines[0]).toBe('driver.findElement(By.css($name)).click();');
+        expect(analyser.tasteeCodes[8].codeLines[0]).toBe('driver.findElement(By.css($name)).click();');
     });
 
     it("Translate tastee code to selenium code - go to", function() {
@@ -103,7 +103,6 @@ describe('Tastee Analyser', function () {
     it('instruction containing empty line is available', function() {
         //see ./spec/examples/test-instructions.yaml
         var instructions = analyser.toSeleniumCode(['instruction containing empty line']);
-        console.log(instructions);
         expect(instructions[0].command).toBe("console.log(\'line 1\')\nconsole.log(\'line 3\')");
     });
 
