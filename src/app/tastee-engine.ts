@@ -12,17 +12,18 @@ export class TasteeEngine {
     constructor(browser: string, headlessMode: boolean = false) {
 
         if (browser) {
+            let webdriver = require('selenium-webdriver');
             switch (browser) {
                 case 'chrome':
                     if (headlessMode) {
                         var chrome = require('selenium-webdriver/chrome');
-                        this.driver = new selenium.Builder()
+                        this.driver = new webdriver.Builder()
                             .withCapabilities(selenium.Capabilities.chrome())
                             .setChromeOptions(new chrome.Options().headless())
                             .build();
                     }
                     else {
-                        this.driver = new selenium.Builder()
+                        this.driver = new webdriver.Builder()
                             .forBrowser('chrome')
                             .build();
                     }
@@ -30,19 +31,19 @@ export class TasteeEngine {
                 case 'firefox':
                     if (headlessMode) {
                         var firefox = require('selenium-webdriver/firefox');
-                        this.driver = new selenium.Builder()
+                        this.driver = new webdriver.Builder()
                             .withCapabilities(selenium.Capabilities.firefox())
                             .setFirefoxOptions(new firefox.Options().headless())
                             .build();
                     }
                     else {
-                        this.driver = new selenium.Builder()
+                        this.driver = new webdriver.Builder()
                             .forBrowser('firefox')
                             .build();
                     }
                     break;
                 default:
-                    this.driver = new selenium.Builder()
+                    this.driver = new webdriver.Builder()
                         .forBrowser('phantomjs')
                         .build();
                     break;
