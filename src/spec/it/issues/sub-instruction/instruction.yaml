@@ -1,0 +1,8 @@
+Étant donné que je ne suis pas connecté:
+    - console.log('Rien à faire :-D');
+
+Quand je vais sur $url:
+    - Allez sur le site $url
+
+Alors je suis redirigé vers la $url:
+    - Vérifier que l url de la page demarre par $url

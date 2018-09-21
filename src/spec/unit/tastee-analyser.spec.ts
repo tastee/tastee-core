@@ -87,4 +87,24 @@ describe('Tastee Analyser', function () {
         var instructions = analyser.toSeleniumCode(["complete.first.task"]);
         expect(instructions[0].command).toBe("'good'");
     });
+
+    it('empty instruction is available', function() {
+        //see ./spec/examples/test-instructions.yaml
+        var instructions = analyser.toSeleniumCode(['empty instruction']);
+        expect(instructions[0].command).toBeFalsy();
+    });
+
+    it('instruction with empty line is available', function() {
+        //see ./spec/examples/test-instructions.yaml
+        var instructions = analyser.toSeleniumCode(['instruction with empty line']);
+        expect(instructions[0].command).toBeFalsy();
+    });
+
+    it('instruction containing empty line is available', function() {
+        //see ./spec/examples/test-instructions.yaml
+        var instructions = analyser.toSeleniumCode(['instruction containing empty line']);
+        console.log(instructions);
+        expect(instructions[0].command).toBe("console.log(\'line 1\')\nconsole.log(\'line 3\')");
+    });
+
 });

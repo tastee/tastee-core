@@ -71,6 +71,7 @@ export class TasteeEngine {
         const reporter = this.reporter;
 
         const instruction = codeToExecute[currentLineIndex];
+        console.log(instruction.command);
         const result = eval(instruction.command);
         return Promise.resolve(result)
             .then(() => {

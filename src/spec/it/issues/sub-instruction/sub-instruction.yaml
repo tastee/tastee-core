@@ -1,0 +1,7 @@
+Allez sur le site $url:
+    - driver.get($url);
+
+Vérifier que l url de la page demarre par $url:
+    - driver.getCurrentUrl().then(url => {
+        assert(url.startsWith($url), 'L url attendue "'+$url+'" est differente de l\'url obtenue "'+url+'"');
+      });

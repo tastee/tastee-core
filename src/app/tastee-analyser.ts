@@ -66,12 +66,17 @@ export class TasteeAnalyser {
 
     extractTasteeCode(data : any) : void {        
         let current : TasteeCode;
+
         for(let key of Object.keys(data)){
             let tasteeCode = new TasteeCode(key);
-            for(let instruction of data[key]){
-                tasteeCode.addCodeLines(TasteeCodeMatcher.getSeleniumCodeFrom(instruction, this.tasteeCodes))
-            }
-            this.tasteeCodes.push(tasteeCode);     
+            if(data[key]){
+                for(let instruction of data[key]){
+                    if(instruction){
+                        tasteeCode.addCodeLines(TasteeCodeMatcher.getSeleniumCodeFrom(instruction, this.tasteeCodes))
+                    }
+                }   
+            } 
+            this.tasteeCodes.push(tasteeCode);
         }
         //once done review lines inside tasteeCode
         this._reviewInnerTasteeCode(0);

@@ -39,4 +39,14 @@ describe('Tastee Engine', function () {
             done();
         });
     });
+
+    it(" execute empty codeLines", (done) => {
+        let instruction = new Instruction(1, 'a line', '');
+
+        engine.execute([instruction], "nameOfTasteeFile").then(result => {
+            expect(result.length).toBe(1);
+            expect(result[0].valid).toBe(true);
+            done();
+        });
+    });
 });

@@ -7,7 +7,7 @@ var assert = require("assert");
 const core = require('../../app/tastee-core');
 var fs = require("fs");
 
-xdescribe("Tastee Core Engine", function () {
+describe("Tastee Core Engine", function () {
 
     let core: TasteeCore;
     beforeEach(function (done) {
