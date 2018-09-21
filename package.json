@@ -1,6 +1,6 @@
 {
   "name": "tastee-core",
-  "version": "0.9.11",
+  "version": "0.9.12",
   "description": "Toast your Application with Simple Tests End to End - core of the tastee framework : test made Natural",
   "repository": {
     "type": "git",
@@ -45,6 +45,8 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "build": "gulp"
+    "build": "gulp",
+    "test": "gulp test",
+    "it": "gulp it"
   }
 }
