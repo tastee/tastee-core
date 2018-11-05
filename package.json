@@ -32,7 +32,6 @@
     "typescript": "^2.0.10"
   },
   "dependencies": {
-    "@types/winston": "^2.3.9",
     "assert": "1.4.1",
     "chromedriver": "^2.33.2",
     "geckodriver": "^1.10.0",
@@ -41,7 +40,7 @@
     "node-fs": "0.1.7",
     "properties-reader": "0.0.16",
     "selenium-webdriver": "3.6.0",
-    "winston": "^2.4.1"
+    "winston": "^3.1.0"
   },
   "main": "dist/index.js",
   "scripts": {

@@ -3,20 +3,25 @@
 import { TasteeEngine } from "../../app/tastee-engine";
 import { Instruction } from "../../app/instruction";
 
-import * as logger from "winston";
+import * as winston from "winston";
 ////////  SPECS  /////////////
+
+const logger = winston.loggers.get('tasteeLog');
 
 describe('Tastee Engine', function () {
     let engine: TasteeEngine;
 
     logger.configure({
         level: 'debug',
+        format: winston.format.combine(
+            winston.format.colorize(),
+            winston.format.splat(),
+            winston.format.simple()
+          ),
         transports: [
-            new logger.transports.Console({
-                colorize: true
-            })
+            new winston.transports.Console()
         ]
-    });
+      });
 
     beforeEach(function () {
         engine = new TasteeEngine(null);
@@ -24,6 +29,15 @@ describe('Tastee Engine', function () {
         engine.driver = driver;
     });
 
+    it(" propagates logger", function () {
+        const infoLog = winston.loggers.get('infoLog');
+        infoLog.configure({
+            level: 'info'
+          });
+
+        let engineInfo = new TasteeEngine(null, false, infoLog);
+        expect(engineInfo.logger).toBe(infoLog);
+    });
 
     it(" quits selenium driver properly", function () {
         engine.stop();

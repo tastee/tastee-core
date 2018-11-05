@@ -1,15 +1,22 @@
 import { Instruction } from './instruction';
 import { TasteeReporter } from './tastee-reporter';
 import * as selenium from 'selenium-webdriver';
-import * as logger from "winston";
+import * as winston from "winston";
 const assert = require('assert');
 
 export class TasteeEngine {
 
     reporter: TasteeReporter;
     driver: selenium.WebDriver;
+    logger: winston.Logger;
 
-    constructor(browser: string, headlessMode: boolean = false) {
+    constructor(browser: string, headlessMode: boolean = false, logger?: winston.Logger) {
+
+        if(logger){
+            this.logger =logger;
+        }else {
+            this.logger = winston.loggers.get('tasteeLog');
+        }
 
         if (browser) {
             let webdriver = require('selenium-webdriver');
@@ -73,17 +80,20 @@ export class TasteeEngine {
 
         const instruction = codeToExecute[currentLineIndex];
 
+        this.logger.debug('Executing line "%s"', instruction.tasteeLine);
+        this.logger.debug('with command "%s"', instruction.command);
+
         return new Promise(function(resolve, reject) {
             (eval(instruction.command));
             resolve();
         })
         .then(() => {
-            logger.debug('Execution SUCCESS.')
+            this.logger.debug('Execution SUCCESS.\n')
             instruction.setValid(true);
             return this._executeCommand(codeToExecute, currentLineIndex+1);
         })
         .catch(error => {
-            logger.debug('Execution FAILED : %s', error);
+            this.logger.debug('Execution FAILED : %s\n', error);
 
             instruction.setValid(false);
             instruction.setErrorMessage(error.message);
