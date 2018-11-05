@@ -2,7 +2,6 @@ import * as fs from 'fs';
 import {TasteeCode,TasteeCodeMatcher} from "./tastee-code";
 import {Instruction} from "./instruction";
 
-
 declare var propertiesReader: any;
 var propertiesReader = require('properties-reader');
 const yaml = require('js-yaml');
