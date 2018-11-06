@@ -34,13 +34,13 @@ export class TasteeCore {
         }
     }
 
-    execute(tasteeCode: string, tasteeFileName?: string): Promise<Instruction[]> {
-        return this.executeLines(tasteeCode.split('\n'), tasteeFileName);
+    execute(tasteeCode: string): Promise<Instruction[]> {
+        return this.executeLines(tasteeCode.split('\n'));
     }
 
-    executeLines(tasteeCode: string[], tasteeFileName?: string): Promise<Instruction[]> {
+    executeLines(tasteeCode: string[]): Promise<Instruction[]> {
         var seleniumCode = this.analyser.toSeleniumCode(tasteeCode);
-        return this.engine.execute(seleniumCode, tasteeFileName);
+        return this.engine.execute(seleniumCode);
     }
 }
 

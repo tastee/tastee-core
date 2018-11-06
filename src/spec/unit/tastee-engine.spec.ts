@@ -47,7 +47,7 @@ describe('Tastee Engine', function () {
     it(" execute simple js code", (done) => {
         let instruction = new Instruction(1, 'a line', '1+1');
 
-        let promise = engine.execute([instruction], "nameOfTasteeFile");
+        let promise = engine.execute([instruction]);
         promise.then(result => {
             expect(result.length).toBe(1);
             expect(result[0].valid).toBe(true);
@@ -58,7 +58,7 @@ describe('Tastee Engine', function () {
     it(" execute empty codeLines", (done) => {
         let instruction = new Instruction(1, 'a line', '');
 
-        engine.execute([instruction], "nameOfTasteeFile").then(result => {
+        engine.execute([instruction]).then(result => {
             expect(result.length).toBe(1);
             expect(result[0].valid).toBe(true);
             done();
@@ -68,7 +68,7 @@ describe('Tastee Engine', function () {
     it(" execute unknown instruction", (done) => {
         let instruction = new Instruction(1, 'a line', 'bad code line');
 
-        engine.execute([instruction], "nameOfTasteeFile").then(result => {
+        engine.execute([instruction]).then(result => {
             expect(result.length).toBe(1);
             expect(result[0].valid).toBe(false);
             done();
@@ -78,7 +78,7 @@ describe('Tastee Engine', function () {
     it(" execute promise error", (done) => {
         let instruction = new Instruction(1, 'a line', 'throw new Error("exception!");');
 
-        engine.execute([instruction], "nameOfTasteeFile").then(result => {
+        engine.execute([instruction]).then(result => {
             expect(result.length).toBe(1);
             expect(result[0].valid).toBe(false);
             done();

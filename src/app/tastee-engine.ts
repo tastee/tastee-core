@@ -16,6 +16,17 @@ export class TasteeEngine {
             this.logger =logger;
         }else {
             this.logger = winston.loggers.get('tasteeLog');
+            this.logger.configure({
+                level: 'info',
+                format: winston.format.combine(
+                    winston.format.colorize(),
+                    winston.format.splat(),
+                    winston.format.simple()
+                  ),
+                transports: [
+                    new winston.transports.Console()
+                ]
+              });
         }
 
         if (browser) {
@@ -63,11 +74,37 @@ export class TasteeEngine {
         this.driver.quit();
     }
 
-    async execute(codeToExecute: Instruction[], tasteeFileName: string): Promise<Instruction[]> {
+    async execute(codeToExecute: Instruction[]): Promise<Instruction[]> {
+        var By = selenium.By;
+        var Key = selenium.Key;
+        var until = selenium.until;
+        var Actions = selenium.Actions;
+        let driver = this.driver;
+        let reporter = this.reporter;
+        for (var idx = 0; idx < codeToExecute.length; idx++) {
+            try {
+                const instruction = codeToExecute[idx];
+
+                this.logger.debug('Executing line "%s"', instruction.tasteeLine);
+                this.logger.debug('with command "%s"', instruction.command);
+
+                await eval(codeToExecute[idx].command);
+                this.logger.debug('Execution SUCCESS.\n')
+                await codeToExecute[idx].setValid(true);
+            } catch (error) {
+                this.logger.debug('Execution FAILED : %s\n', error);
+                await codeToExecute[idx].setValid(false);
+                await codeToExecute[idx].setErrorMessage(error.message);
+            }
+        }
+        return codeToExecute;
+}
+
+   /* async execute(codeToExecute: Instruction[], tasteeFileName: string): Promise<Instruction[]> {
         return this._executeCommand(codeToExecute);
     }
 
-    private async _executeCommand(codeToExecute: Instruction[], currentLineIndex: number = 0): Promise<Instruction[]> {
+    /*private async _executeCommand(codeToExecute: Instruction[], currentLineIndex: number = 0): Promise<Instruction[]> {
         if (currentLineIndex === codeToExecute.length) {
             return Promise.resolve(codeToExecute);
         }
@@ -83,8 +120,8 @@ export class TasteeEngine {
         this.logger.debug('Executing line "%s"', instruction.tasteeLine);
         this.logger.debug('with command "%s"', instruction.command);
 
-        return new Promise(function(resolve, reject) {
-            (eval(instruction.command));
+        return new Promise(async function(resolve, reject) {
+            await (eval(instruction.command));
             resolve();
         })
         .then(() => {
@@ -100,7 +137,7 @@ export class TasteeEngine {
             return this._executeCommand(codeToExecute, currentLineIndex+1);
         });
        
-    }
+    }*/
 
 }
 
